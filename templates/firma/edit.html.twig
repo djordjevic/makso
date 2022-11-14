@@ -1,0 +1,191 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Firma - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Firma</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Izmena podataka</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- user dashboard section start -->
+    <section class="section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="dash">
+                            <div class="dashboard-right">
+                                <div class="dashboard">
+                                    {{ form_start(form, {'attr': {'class' : 'needs-validation'}})}}
+                                    <div class="page-title title title1 title-effect">
+                                        <h2>Izmenite Vaše podatke</h2>
+                                    </div>
+                                    <div class="welcome-msg">
+                                        {% if form_errors(form.email) %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ form_errors(form.email) }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="order-box-contain my-4">
+                                        <div class="row g-4">
+                                            <div class="col-lg-12 col-sm-12">
+                                                <div class="order-box">
+                                                    <h5 class="mb-3">Opšti podaci</h5>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label font-light">Naziv</label>
+                                                        {{ form_widget(form.nazivFirme) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="address" class="form-label font-light">PIB</label>
+                                                        {{ form_widget(form.pib) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label font-light">Ime</label>
+                                                        {{ form_widget(form.firstName) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="address" class="form-label font-light">Prezime</label>
+                                                        {{ form_widget(form.lastName) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="number" class="form-label font-light">Email</label>
+                                                        {{ form_widget(form.email) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="number" class="form-label font-light">Mobilni telefon</label>
+                                                        {{ form_widget(form.mobPhone) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="number" class="form-label font-light">Telefon</label>
+                                                        {{ form_widget(form.phone) }}
+                                                    </div>
+                                                    <hr>
+                                                    <h5 class="mb-3">Primarna adresa</h5>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label font-light">Adresa</label>
+                                                        {{ form_widget(form.address) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="address" class="form-label font-light">Grad</label>
+                                                        {{ form_widget(form.city) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="number" class="form-label font-light">PTT broj</label>
+                                                        {{ form_widget(form.postanskiBroj) }}
+                                                    </div>
+                                                    <hr>
+                                                    <h5 class="mb-3">Adresa za dostavu (popuniti ukoliko se razlikuje od primarne adrese)</h5>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label font-light">Ime osobe za kontakt</label>
+                                                        {{ form_widget(form.firstNamePrimaoc) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label font-light">Prezime osobe za kontakt</label>
+                                                        {{ form_widget(form.lastNamePrimaoc) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="name" class="form-label font-light">Adresa</label>
+                                                        {{ form_widget(form.addressPrimaoc) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="address" class="form-label font-light">Grad</label>
+                                                        {{ form_widget(form.cityPrimaoc) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="number" class="form-label font-light">PTT broj</label>
+                                                        {{ form_widget(form.postanskiBrPrimaoc) }}
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="number" class="form-label font-light">Mobilni telefon</label>
+                                                        {{ form_widget(form.mobPhonePrimaoc) }}
+                                                    </div>
+
+                                                    <div class="d-block">
+                                                        <a href="{{ path('app_firma') }}" type="button" class="btn bg-secondary text-white rounded-1 modal-close-button">Odustanite</a>
+                                                        <button type="submit" class="btn btn-solid-default rounded-1">Sačuvajte</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- user dashboard section end -->
+
+    <!-- Subscribe Section Start -->
+    {% include 'include/subscribe.html.twig' %}
+    <!-- Subscribe Section End -->
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

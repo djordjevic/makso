@@ -1,0 +1,565 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Firma - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Firma</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Info</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- user dashboard section start -->
+    <section class="section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <ul class="nav nav-tabs custome-nav-tabs flex-column category-option" id="myTab">
+                        <li class="nav-item mb-2">
+                            <button class="nav-link font-light active" id="tab" data-bs-toggle="tab"
+                                    data-bs-target="#dash" type="button"><i
+                                        class="fas fa-angle-right"></i>Profil</button>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <button class="nav-link font-light" id="1-tab" data-bs-toggle="tab" data-bs-target="#order"
+                                    type="button"><i class="fas fa-angle-right"></i>Lista porudžbina</button>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <button class="nav-link font-light" id="5-tab" data-bs-toggle="tab"
+                                    data-bs-target="#profile" type="button"><i
+                                        class="fas fa-angle-right"></i>Podaci</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-9">
+                    <div class="filter-button dash-filter dashboard">
+                        <button class="btn btn-solid-default btn-sm fw-bold filter-btn">Prikaži meni</button>
+                    </div>
+                    {% for message in app.flashes('notice') %}
+                        <div class="alert alert-success" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="dash">
+                            <div class="dashboard-right">
+                                <div class="dashboard">
+                                    <div class="page-title title title1 title-effect">
+                                        <h2>{{ user.nazivFirme }}</h2>
+                                    </div>
+                                    <div class="welcome-msg">
+                                        <h6 class="font-light">Dobrodošli, <span>{{ user.nazivFirme }}</span></h6>
+                                        <p class="font-light">Na Vašoj profilnoj stranici možete da vidite poružbine koje ste u predhodnom periodu kreirali.
+                                            Takođe, možete upravljati Vašim profilnim informacijama i adresama. </p>
+                                        <p class="font-light"><strong>Važno je</strong> da ukoliko se prvi put prijavljujete na profil, popunite sve neophodne informacije na Vašem profilu.</p>
+                                    </div>
+
+                                    <div class="order-box-contain my-4">
+                                        <div class="row g-4">
+                                            <div class="col-lg-4 col-sm-6">
+                                                <div class="order-box">
+                                                    <div class="order-box-image">
+                                                        <img src="{{ asset('assets/images/svg/box.png') }}"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                    </div>
+                                                    <div class="order-box-contain">
+                                                        <img src="{{ asset('assets/images/svg/box1.png') }}"
+                                                             class="img-fluid blur-up lazyload" alt="">
+                                                        <div>
+                                                            <h5 class="font-light">Ukupno porudžbina</h5>
+                                                            <h3>{{ count }}</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="box-account box-info">
+                                        <div class="box-head">
+                                            <h3>Opšte informacije</h3>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="box">
+                                                    <div class="box-title">
+                                                        <h4>Kontakt</h4>
+                                                    </div>
+                                                    <div class="box-content">
+                                                        <h6 class="font-light">{{ user.nazivFirme }}</h6>
+                                                        <h6 class="font-light">{{ user.pib }}</h6>
+                                                            {% if (user.firstName is empty) or (user.lastName is empty) %}
+                                                                <h6 class="font-light" data-toggle="tooltip" data-placement="top" title="Molimo Vas da upotpunite podatke da bi buduće porudžbine bile validne.">
+                                                                    Nisu uneti podaci*
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.getFullName() }}
+                                                                </h6>
+                                                            {% endif %}
+                                                        <h6 class="font-light">{{ user.email }}</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="box address-box">
+                                                <div class="box-title">
+                                                    <h4>Adrese</h4></div>
+                                                <div class="box-content">
+                                                    <div class="row g-4">
+                                                        <div class="col-sm-6">
+                                                            <h5 class="font-light">Primarna adresa</h5>
+                                                             {% if user.address is empty %}
+                                                            <h6 class="font-light" data-toggle="tooltip" data-placement="top" title="Molimo Vas da upotpunite podatke da bi buduće porudžbine bile validne.">
+                                                                Nisu uneti podaci*
+                                                            </h6>
+                                                            {% else %}
+                                                            <h6 class="font-light" >
+                                                                {{ user.address }}
+                                                            </h6>
+                                                            {% endif %}
+                                                            {% if (user.city is empty) or (user.postanskiBroj is empty) %}
+                                                                <h6 class="font-light" data-toggle="tooltip" data-placement="top" title="Molimo Vas da upotpunite podatke da bi buduće porudžbine bile validne.">
+                                                                    Nisu uneti podaci*
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.postanskiBroj }} {{ user.city }}
+                                                                </h6>
+                                                            {% endif %}
+                                                            {% if user.mobPhone is empty %}
+                                                                <h6 class="font-light" data-toggle="tooltip" data-placement="top" title="Molimo Vas da upotpunite podatke da bi buduće porudžbine bile validne.">
+                                                                    Nisu uneti podaci*
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.mobPhone }}
+                                                                </h6>
+                                                            {% endif %}
+                                                            {% if user.phone is empty %}
+                                                                <h6 class="font-light">
+                                                                    Nisu uneti podaci
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.phone }}
+                                                                </h6>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <h5 class="font-light">Adresa za dostavu</h5>
+                                                            {% if (user.firstNamePrimaoc is empty) or (user.lastNamePrimaoc is empty) %}
+                                                                <h6 class="font-light" >
+                                                                    Koristi primarnu adresu
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.firstNamePrimaoc }} {{ user.lastNamePrimaoc }}
+                                                                </h6>
+                                                            {% endif %}
+                                                            {% if user.addressPrimaoc is empty %}
+                                                                <h6 class="font-light" >
+                                                                    Koristi primarnu adresu
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.addressPrimaoc }}
+                                                                </h6>
+                                                            {% endif %}
+                                                            {% if (user.cityPrimaoc is empty) or (user.postanskiBrPrimaoc is empty) %}
+                                                                <h6 class="font-light" >
+                                                                    Koristi primarnu adresu
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.postanskiBrPrimaoc }} {{ user.cityPrimaoc }}
+                                                                </h6>
+                                                            {% endif %}
+                                                            {% if user.mobPhonePrimaoc is empty %}
+                                                                <h6 class="font-light" >
+                                                                    Koristi primarnu adresu
+                                                                </h6>
+                                                            {% else %}
+                                                                <h6 class="font-light" >
+                                                                    {{ user.mobPhonePrimaoc }}
+                                                                </h6>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade table-dashboard dashboard wish-list-section" id="order">
+                            <div class="table-responsive">
+                                <table class="table cart-table">
+                                    <thead>
+                                    <tr class="table-head">
+                                        <th scope="col">#</th>
+                                        <th scope="col">Broj porudžbine</th>
+                                        <th scope="col">Datum i vreme</th>
+                                        <th scope="col">Pregledajte</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for porudzbina in porudzbine %}
+                                        <tr>
+                                            <td>
+                                                <p class="mt-0">{{ loop.index }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="mt-0">#{{ porudzbina.id }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="fs-6 m-0">{{ porudzbina.dateAdded | date("d.m.Y") }}</p>
+                                            </td>
+                                            <td>
+                                                <a href="{{ path('app_firma_order_view', {id: porudzbina.id}) }}"><i class="far fa-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade dashboard-profile dashboard" id="profile">
+                            <div class="welcome-msg">
+                                <p class="font-light">Polja obeležena zvezdicom (*) <strong>moraju</strong> se popuniti, jer u suprotnom svaka buduća porudžbina <strong>neće biti validna</strong>.</p>
+                            </div>
+                            <div class="box-head">
+                                <h3>Profil</h3>
+                                <a href="{{ path('app_firma_edit') }}">izmenite</a>
+                            </div>
+                            <ul class="dash-profile">
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Ime</h6>
+                                    </div>
+                                    <div class="right">
+                                        <h6>{{ user.firstName }}</h6>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Prezime</h6>
+                                    </div>
+                                    <div class="right">
+                                        <h6>{{ user.lastName }}</h6>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Email</h6>
+                                    </div>
+                                    <div class="right">
+                                        <h6>{{ user.email }}</h6>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Mobilni telefon</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.mobPhone is empty %}
+                                        <h6 data-toggle="tooltip" data-placement="top" title="Molimo Vas da upotpunite podatke da bi buduće porudžbine bile validne.">
+                                            Nisu uneti podaci*
+                                        </h6>
+                                        {% else %}
+                                        <h6>{{ user.mobPhone }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Telefon</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.phone is empty %}
+                                        <h6>
+                                            Nisu uneti podaci*
+                                        </h6>
+                                        {% else %}
+                                        <h6>{{ user.phone }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div class="box-head mt-lg-5 mt-3">
+                                <h3>Primarna adresa</h3>
+                            </div>
+
+                            <ul class="dash-profile">
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Adresa</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.address is empty %}
+                                            <h6>
+                                                Nisu uneti podaci*
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.address }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Grad</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.city is empty %}
+                                            <h6>
+                                                Nisu uneti podaci*
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.city }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+
+                                <li class="mb-0">
+                                    <div class="left">
+                                        <h6 class="font-light">Poštanski broj</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.postanskiBroj is empty %}
+                                            <h6>
+                                                Nisu uneti podaci*
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.postanskiBroj }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="box-head mt-lg-5 mt-3">
+                                <h3>Adresa za dostavu</h3>
+                            </div>
+
+                            <ul class="dash-profile">
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Lice za kontakt</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if (user.firstNamePrimaoc is empty) or (user.lastNamePrimaoc is empty) %}
+                                            <h6>
+                                                Koristi primarnu adresu
+                                            </h6>
+                                        {% else %}
+                                            <h6>
+                                                {{ user.firstNamePrimaoc }} {{ user.lastNamePrimaoc }}
+                                            </h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Adresa</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.addressPrimaoc is empty %}
+                                            <h6>
+                                                Koristi primarnu adresu
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.addressPrimaoc }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Grad</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.cityPrimaoc is empty %}
+                                            <h6>
+                                                Koristi primarnu adresu
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.cityPrimaoc }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+
+                                <li class="mb-0">
+                                    <div class="left">
+                                        <h6 class="font-light">Poštanski broj</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.postanskiBrPrimaoc is empty %}
+                                            <h6>
+                                                Koristi primarnu adresu
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.postanskiBrPrimaoc }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                                <li class="mb-0">
+                                    <div class="left">
+                                        <h6 class="font-light">Mobilni telefon</h6>
+                                    </div>
+                                    <div class="right">
+                                        {% if user.mobPhonePrimaoc is empty %}
+                                            <h6>
+                                                Koristi primarnu adresu
+                                            </h6>
+                                        {% else %}
+                                            <h6>{{ user.mobPhonePrimaoc }}</h6>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="box-head mt-lg-5 mt-3">
+                                <h3>Lozinka</h3>
+                                <a href="{{ path('app_firma_edit_password') }}">izmenite</a>
+                            </div>
+
+                            <ul class="dash-profile">
+                                <li>
+                                    <div class="left">
+                                        <h6 class="font-light">Lozinka</h6>
+                                    </div>
+                                    <div class="right">
+                                        <h6>●●●●●●●●●</h6>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- user dashboard section end -->
+
+    <!-- Subscribe Section Start -->
+    {% include 'include/subscribe.html.twig' %}
+    <!-- Subscribe Section End -->
+    <!-- Reset Password Modal Start -->
+    <div class="modal fade reset-email-modal" id="resetEmail">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">Comfirm Email</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body pt-3">
+                    <form>
+                        <div class="mb-3">
+                            <label for="email" class="form-label font-light">Email address</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="comfirmEmail" class="form-label font-light">Comfirm Email address</label>
+                            <input type="email" class="form-control" id="comfirmEmail">
+                        </div>
+                        <div>
+                            <label for="exampleInputPassword1" class="form-label font-light">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer pt-0">
+                    <button class="btn bg-secondary rounded-1 modal-close-button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-solid-default rounded-1" data-bs-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Reset Password Modal End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

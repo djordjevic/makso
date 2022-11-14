@@ -1,0 +1,159 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Načini plaćanja - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+
+    <!-- Breadcrumb section start -->
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Načini plaćanja</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Načini plaćanja</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb section end -->
+
+    <!-- FAQ details start -->
+    <section class="faq-details section-b-space">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="faq-link-box">
+                        <ul>
+                            <li>
+                                <a href="#1">
+                                    <h4>1.</h4>
+                                    <h5>Cena</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#2">
+                                    <h4>2.</h4>
+                                    <h5>Plaćanje preko računa</h5>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#3">
+                                    <h4>3.</h4>
+                                    <h5>Plaćanje pouzećem</h5>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-8">
+                    <div class="faq-heading" id="1">
+                        <i data-feather="help-circle" class="theme-color"></i>
+                        <div class="faq-option">
+                            <h3>Cena</h3>
+                            <h6 class="font-light">Sve cene izražene su u domaćoj valuti — dinar (RSD) i uključuju PDV.
+
+                                Proizvodi se naplaćuju po cenama koje važe na dan naručivanja i objavljenim na internet stranicama. Cene, uslovi plaćanja i akcijske ponude važe isključivo u trenutku plaćanja i mogu se promeniti bez prethodne najave. Prodavac će nastojati da cene navedene u narudžbini budu tačne, međutim može doći do greške.
+
+                                U slučaju da se cena proizvoda promeni za vreme obrade narudžbine, ili cena na internet stranicama iz bilo kojeg drugog razloga ne bude odgovarala stvarnoj ceni proizvoda ili usluge, prodavac će omogućiti Kupcu da odustane od kupovine odnosno da potvrdi novu promenjenu cenu.</h6>
+                        </div>
+                    </div>
+
+                    <div class="faq-heading" id="2">
+                        <i data-feather="help-circle" class="theme-color"></i>
+                        <div class="faq-option">
+                            <h3>Plaćanje preko računa</h3>
+                            <h6 class="font-light">Po završetku online porudžbine kupac dobija na e-mail detaljno uputustvo za direktnu uplatu na račun prodavca. Potrebno je pratiti uputstvo i obavezno navesti račun i poziv na broj naznačen na računu. Plaćanje možete izvršiti standardnom uplatnicom u bilo kojoj pošti ili banci, ili putem Interneta ukoliko imate pristup svom računu kroz internet bankarstvo.</h6>
+                        </div>
+                    </div>
+
+                    <div class="faq-heading" id="3">
+                        <i data-feather="help-circle" class="theme-color"></i>
+                        <div class="faq-option">
+                            <h3>Plaćanje pouzećem</h3>
+                            <h6 class="font-light">Ukoliko kupac ipak ne želi da svoju online porudžbinu plati karticom, QR kodom Ili uplatincom to može uraditi gotovinskim plaćanjem prilikom isporuke aparata. Dolaskom kurira na vašu adresu uređaj u celosti možete platiti gotovinski.</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ details end -->
+
+    <!-- Subscribe Section Start -->
+    {% include 'include/subscribe.html.twig' %}
+    <!-- Subscribe Section End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

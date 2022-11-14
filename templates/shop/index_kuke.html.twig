@@ -1,0 +1,640 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Prodavnica - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <!-- Breadcrumb section start -->
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Kuke</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" aria-current="page">Kupovina</li>
+                            <li class="breadcrumb-item active" aria-current="page">Prodavnica</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb section end -->
+    <section class="section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <div class="category-option">
+                        <div class="button-close mb-3">
+                            <button class="btn p-0"><i data-feather="arrow-left"></i> Zatvorite</button>
+                        </div>
+                        <form method="post" action="{{ path('prodavnica_kuka') }}">
+                            <div class="accordion category-name" id="accordionExample">
+                                {% if category is not empty %}
+                                    <div class="accordion-item category-rating">
+                                        <h2 class="accordion-header" id="heading1">
+                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                                    data-bs-target="#collapse1">
+                                                Potkategorije
+                                            </button>
+                                        </h2>
+                                        <div id="collapse1" class="accordion-collapse collapse show"
+                                             data-bs-parent="#accordionExample">
+                                            <div class="accordion-body category-scroll">
+                                                <ul class="category-list">
+                                                    {% for cat in category %}
+                                                        <li>
+                                                            <div class="form-check ps-0 custome-form-check">
+                                                                <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault1" name="kategorija[]" value="{{ cat.id }}"
+                                                                    {% if cat.id in filter.kat %}
+                                                                        checked
+                                                                    {% endif %}
+                                                                >
+                                                                <label class="form-check-label" for="flexCheckDefault1">{{ cat.name }}</label>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if atribute is not empty %}
+                                    <div class="accordion-item category-rating">
+                                <h2 class="accordion-header" id="heading2">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse2">
+                                        Atributi
+                                    </button>
+                                </h2>
+                                <div id="collapse2" class="accordion-collapse collapse show"
+                                     data-bs-parent="#accordionExample">
+                                    <div class="accordion-body category-scroll">
+                                        <ul class="category-list">
+                                            {% for atr in atribute %}
+                                                <li>
+                                                    <div class="form-check ps-0 custome-form-check">
+                                                        <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault1" name="atribut[]" value="{{ atr.id }}"
+                                                            {% if atr.id in filter.atr %}
+                                                                checked
+                                                            {% endif %}
+                                                        >
+                                                        <label class="form-check-label" for="flexCheckDefault1">{{ atr.name }}</label>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                                {% endif %}
+{#                            <div class="accordion-item category-price">#}
+{#                                <h2 class="accordion-header" id="heading3">#}
+{#                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">Cena</button>#}
+{#                                </h2>#}
+{#                                <div id="collapse3" class="accordion-collapse collapse show"#}
+{#                                     aria-labelledby="heading3" data-bs-parent="#accordionExample">#}
+{#                                    <div class="accordion-body">#}
+{#                                        <div class="range-slider category-list">#}
+{#                                            <input type="text" class="js-range-slider" value="" name="cena">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading4">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse4">
+                                        Tagovi
+                                    </button>
+                                </h2>
+                                <div id="collapse4" class="accordion-collapse collapse show"
+                                     aria-labelledby="heading4" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <ul class="category-list">
+                                            <li>
+                                                <div class="form-check ps-0 custome-form-check">
+                                                    <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault15" name="tag[nov]" value="1"
+                                                            {% if (filter.tag.nov is defined) and  (filter.tag.nov == 1) %}
+                                                                checked
+                                                            {% endif %}  >
+                                                    <label class="form-check-label" for="flexCheckDefault15">NOVO</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="form-check ps-0 custome-form-check">
+                                                    <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault16" name="tag[popust]" value="1"
+                                                            {% if (filter.tag.popust is defined) and  (filter.tag.popust == 1) %}
+                                                                checked
+                                                            {% endif %}>
+                                                    <label class="form-check-label" for="flexCheckDefault16">POPUST</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="form-check ps-0 custome-form-check">
+                                                    <input class="checkbox_animated check-it" type="checkbox" id="flexCheckDefault17" name="tag[stanje]" value="1"
+                                                            {% if (filter.tag.stanje is defined) and  (filter.tag.stanje == 1) %}
+                                                                checked
+                                                            {% endif %}>
+                                                    <label class="form-check-label" for="flexCheckDefault17">DOSTUPNO</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row text-center mt-3">
+                                <button type="submit" class="btn btn-solid-default btn fw-bold mb-0 ms-0">Primenite</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-12 ratio_30">
+                    <div class="row g-4">
+                        <!-- filter button -->
+                        <div class="filter-button">
+                            <button class="danger-button danger-center btn btn-sm filter-btn"><i data-feather="align-left"></i> Filteri</button>
+                        </div>
+                        <!-- filter button -->
+{#                        <div class="col-md-12">#}
+{#                            <h3 class="mb-3">{{ count }} Results Found</h3>#}
+{#                        </div>#}
+                        <div class="col-12">
+                            <h3>{{ count }} rezultata</h3>
+                            <div class="filter-options">
+                                <div class="grid-options d-sm-inline-block d-none">
+                                    <ul class="d-flex">
+                                        <li class="three-grid d-md-inline-block d-none">
+                                            <a href="javascript:void(0)">
+                                                <img src="{{ asset('assets/svg/grid-3.svg') }}" class="img-fluid blur-up lazyload"
+                                                     alt="">
+                                            </a>
+                                        </li>
+                                        <li class="grid-btn active d-lg-inline-block d-none">
+                                            <a href="javascript:void(0)">
+                                                <img src="{{ asset('assets/svg/grid.svg') }}" class="img-fluid blur-up lazyload"
+                                                     alt="">
+                                            </a>
+                                        </li>
+                                        <li class="list-btn">
+                                            <a href="javascript:void(0)">
+                                                <img src="{{ asset('assets/svg/list.svg') }}" class="img-fluid blur-up lazyload"
+                                                     alt="">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- label and featured section -->
+
+                    <!-- Prodcut setion -->
+                    <div class="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
+                                                {% if (paginationProducts is defined) and (paginationProducts | length > 0) %}
+                                                    {% for product in paginationProducts %}
+                                                        {% if app.user %}
+                                                            {% if app.user.FirmaIliFizickoLice in [1, 4]  %}
+                                                                <div>
+                                                                    <div class="product-box">
+                                                                        <div class="img-wrapper">
+                                                                            <div class="front">
+                                                                                <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                                                    <img src="{% if product.slikaMain is null %}
+                                                                                        {{ asset('assets/images/products/no-image.jpg') }}
+                                                                                    {% else %}
+                                                                                        {{ asset(product.slikaMain) }}
+                                                                                    {% endif %}"
+                                                                                         class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="label-block">
+                                                                                {% if product.flNewProduct == 1 %}
+                                                                                    <span class="label label-black">Novo</span>
+                                                                                {% endif %}
+                                                                                {% if product.flDiscountVp == 1 %}
+                                                                                    <span class="label label-theme">Popust</span>
+                                                                                {% endif %}
+                                                                                {% if product.flOutOfStock == 1 %}
+                                                                                    <span class="label label-theme">Nema na stanju</span>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            {% if product.flOutOfStock == 0 %}
+                                                                                <div class="cart-wrap">
+                                                                                    <ul>
+                                                                                        <li>
+                                                                                            <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                                                <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                                                <input name="qty" type="hidden" value="1">
+                                                                                                <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                                                            </form>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        <div class="product-details">
+                                                                            <div class="rating-details">
+                                                                                <span class="font-light grid-content">
+                                                                                    {% if product.flDiscountVp == 1 %}
+                                                                                        {% if product.discountVpPriceDin > 0 %}
+                                                                                            {{ ((product.discountVpPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                            <del class="font-light ml-1">{{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                                        {% else %}
+                                                                                            {{ product.discountVpPriceEur | number_format(2, '.', ',') }} eur
+                                                                                            <span class="font-light ml-1">{{ product.priceVpEur | number_format(2, '.', ',') }} eur</span>
+                                                                                        {% endif %}
+                                                                                    {% else %}
+                                                                                        {% if product.priceVpDin > 0 %}
+                                                                                            {{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                        {% else %}
+                                                                                            {{ product.priceVpEur | number_format(2, '.', ',') }} eur
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                </span>
+                                                                            </div>
+                                                                            <div class="main-price">
+                                                                                <h5><a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                                                        {{ product.title }}
+                                                                                    </a></h5>
+                                                                                <div class="listing-content">
+                                                                                    <span class="font-light">{{ product.kategorija.getName() }}</span>
+                                                                                    <p class="font-light">{{ product.caracteristic | raw }}</p>
+                                                                                    <h4 class="theme-color">
+                                                                                        {% if product.flDiscountVp == 1 %}
+                                                                                            {% if product.discountVpPriceDin > 0 %}
+                                                                                                {{ ((product.discountVpPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                                <del class="font-light ml-1">{{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                                            {% else %}
+                                                                                                {{ product.discountVpPriceEur | number_format(2, '.', ',') }} eur
+                                                                                                <span class="font-light ml-1">{{ product.priceVpEur | number_format(2, '.', ',') }} eur</span>
+                                                                                            {% endif %}
+                                                                                        {% else %}
+                                                                                            {% if product.priceVpDin > 0 %}
+                                                                                                {{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                            {% else %}
+                                                                                                {{ product.priceVpEur | number_format(2, '.', ',') }} eur
+                                                                                            {% endif %}
+                                                                                        {% endif %}
+                                                                                    </h4>
+                                                                                </div>
+                                                                                {% if product.flOutOfStock == 0 %}
+                                                                                    <br>
+                                                                                    <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                                        <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                                        <input name="qty" type="hidden" value="1">
+                                                                                        <button type="submit" class="btn listing-content">Dodajte u korpu</button>
+                                                                                    </form>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% else %}
+                                                                <div>
+                                                                    <div class="product-box">
+                                                                        <div class="img-wrapper">
+                                                                            <div class="front">
+                                                                                <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                                                    <img src="{% if product.slikaMain is null %}
+                                                                                        {{ asset('assets/images/products/no-image.jpg') }}
+                                                                                    {% else %}
+                                                                                        {{ asset(product.slikaMain) }}
+                                                                                    {% endif %}"
+                                                                                         class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="label-block">
+                                                                                {% if product.flNewProduct == 1 %}
+                                                                                    <span class="label label-black">Novo</span>
+                                                                                {% endif %}
+                                                                                {% if product.flDiscount == 1 %}
+                                                                                    <span class="label label-theme">Popust</span>
+                                                                                {% endif %}
+                                                                                {% if product.flOutOfStock == 1 %}
+                                                                                    <span class="label label-theme">Nema na stanju</span>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                            {% if product.flOutOfStock == 0 %}
+                                                                                <div class="cart-wrap">
+                                                                                    <ul>
+                                                                                        <li>
+                                                                                            <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                                                <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                                                <input name="qty" type="hidden" value="1">
+                                                                                                <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                                                            </form>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        <div class="product-details">
+                                                                            <div class="rating-details">
+                                                                            <span class="font-light grid-content">
+                                                                                {% if product.flDiscount == 1 %}
+                                                                                    {% if product.discountPriceDin > 0 %}
+                                                                                        {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                        <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                                        {% else %}
+                                                                                        {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                                        <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                                                    {% endif %}
+                                                                                {% else %}
+                                                                                    {% if product.priceDin > 0 %}
+                                                                                        {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                    {% else %}
+                                                                                        {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                                                    {% endif %}
+                                                                                {% endif %}
+                                                                            </span>
+                                                                            </div>
+                                                                            <div class="main-price">
+                                                                                <h4><a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                                                        {{ product.title }}
+                                                                                    </a></h4>
+                                                                                <div class="listing-content">
+                                                                                    <span class="font-light">{{ product.kategorija.getName() }}</span>
+                                                                                    <p class="font-light">{{ product.caracteristic | raw }}</p>
+                                                                                    <h4 class="theme-color">
+                                                                                        {% if product.flDiscount == 1 %}
+                                                                                            {% if product.discountPriceDin > 0 %}
+                                                                                                {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                                <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                                            {% else %}
+                                                                                                {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                                                <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                                                            {% endif %}
+                                                                                        {% else %}
+                                                                                            {% if product.priceDin > 0 %}
+                                                                                                {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                            {% else %}
+                                                                                                {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                                                            {% endif %}
+                                                                                        {% endif %}
+                                                                                    </h4>
+                                                                                </div>
+                                                                                {% if product.flOutOfStock == 0 %}
+                                                                                    <br>
+                                                                                    <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                                        <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                                        <input name="qty" type="hidden" value="1">
+                                                                                        <button type="submit" class="btn listing-content">Dodajte u korpu</button>
+                                                                                    </form>
+                                                                                {% endif %}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <div>
+                                                                <div class="product-box">
+                                                                    <div class="img-wrapper">
+                                                                        <div class="front">
+                                                                            <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                                                <img src="{% if product.slikaMain is null %}
+                                                                                        {{ asset('assets/images/products/no-image.jpg') }}
+                                                                                    {% else %}
+                                                                                        {{ asset(product.slikaMain) }}
+                                                                                    {% endif %}"
+                                                                                     class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="label-block">
+                                                                            {% if product.flNewProduct == 1 %}
+                                                                                <span class="label label-black">Novo</span>
+                                                                            {% endif %}
+                                                                            {% if product.flDiscount == 1 %}
+                                                                                <span class="label label-theme">Popust</span>
+                                                                            {% endif %}
+                                                                            {% if product.flOutOfStock == 1 %}
+                                                                                <span class="label label-theme">Nema na stanju</span>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                        {% if product.flOutOfStock == 0 %}
+                                                                            <div class="cart-wrap">
+                                                                                <ul>
+                                                                                    <li>
+                                                                                        <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                                            <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                                            <input name="qty" type="hidden" value="1">
+                                                                                            <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                                                        </form>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                    <div class="product-details">
+                                                                        <div class="rating-details">
+                                                                            <span class="font-light grid-content">
+                                                                                {% if product.flDiscount == 1 %}
+                                                                                        {% if product.discountPriceDin > 0 %}
+                                                                                            {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                    <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                                        {% else %}
+                                                                                    {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                                    <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                                                {% endif %}
+                                                                                    {% else %}
+                                                                                    {% if product.priceDin > 0 %}
+                                                                                        {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                    {% else %}
+                                                                                        {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                                                    {% endif %}
+                                                                                {% endif %}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="main-price">
+                                                                            <h4><a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                                                    {{ product.title }}
+                                                                                </a></h4>
+                                                                            <div class="listing-content">
+                                                                                <span class="font-light">{{ product.kategorija.getName() }}</span>
+                                                                                <p class="font-light">{{ product.caracteristic | raw }}</p>
+                                                                                <h4 class="theme-color">
+                                                                                    {% if product.flDiscount == 1 %}
+                                                                                        {% if product.discountPriceDin > 0 %}
+                                                                                            {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                            <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                                        {% else %}
+                                                                                            {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                                            <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                                                        {% endif %}
+                                                                                    {% else %}
+                                                                                        {% if product.priceDin > 0 %}
+                                                                                            {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                                        {% else %}
+                                                                                            {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                                                        {% endif %}
+                                                                                    {% endif %}
+                                                                                </h4>
+                                                                            </div>
+                                                                            {% if product.flOutOfStock == 0 %}
+                                                                                <br>
+                                                                                <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                                    <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                                    <input name="qty" type="hidden" value="1">
+                                                                                    <button type="submit" class="btn listing-content">Dodajte u korpu</button>
+                                                                                </form>
+                                                                            {% endif %}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+
+                        <!-- Prodcut setion -->
+                    </div>
+{#                    <nav class="page-section">#}
+{#                        {{ knp_pagination_render(paginationProducts) }}#}
+{#                    </nav>#}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Section end -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+<script>
+    $(function () {
+        var $range = $(".js-range-slider"),
+            $inputFrom = $(".js-input-from"),
+            $inputTo = $(".js-input-to"),
+            instance,
+            min = 0,
+            max = 500000,
+            from = 0,
+            to = 0;
+
+        $range.ionRangeSlider({
+            type: "double",
+            min: min,
+            max: max,
+            from: 0,
+            to: 500000,
+            prefix: "RSD ",
+            onStart: updateInputs,
+            onChange: updateInputs,
+            step: 100,
+            prettify_enabled: true,
+            prettify_separator: ".",
+            values_separator: " - ",
+            force_edges: true,
+        });
+
+        instance = $range.data("ionRangeSlider");
+
+        function updateInputs(data) {
+            from = "RSD" + data.from;
+            to = "RSD" + data.to;
+
+            $inputFrom.prop("value", from);
+            $inputTo.prop("value", to);
+        }
+
+        $inputFrom.on("input", function () {
+            var val = $(this).prop("value");
+
+            // validate
+            if (val < min) {
+                val = min;
+            } else if (val > to) {
+                val = to;
+            }
+
+            instance.update({
+                from: val,
+            });
+        });
+
+        $inputTo.on("input", function () {
+            var val = $(this).prop("value");
+
+            // validate
+            if (val < from) {
+                val = from;
+            } else if (val > max) {
+                val = max;
+            }
+
+            instance.update({
+                to: val,
+            });
+        });
+    });
+</script>
+{% endblock footerjavascript %}

@@ -1,0 +1,204 @@
+<section class="ratio_asos">
+    <div class="container-fluid p-0">
+        <div class="row m-0">
+            <div class="col-sm-12 p-0">
+                <div class="title text-center">
+                    <h5>Samo za tebe</h5>
+                    <h2>Naši proizvodi</h2>
+                </div>
+                <div class="product-wrapper slide-6">
+                    {% if (randomProducts is defined) and (randomProducts | length > 0) %}
+                        {% for product in randomProducts |slice(0, 6) %}
+                            {% if app.user %}
+                                {% if app.user.FirmaIliFizickoLice in [1, 4]  %}
+                                    <div>
+                                        <div class="product-box">
+                                            <div class="img-wrapper">
+                                                <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                    <img src="{% if product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.slikaMain) }}
+                                                            {% endif %}"
+                                                         class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                </a>
+                                                <div class="label-block">
+                                                    {% if product.flNewProduct == 1 %}
+                                                        <span class="label label-black">Novo</span>
+                                                    {% endif %}
+                                                    {% if product.flDiscountVp == 1 %}
+                                                        <span class="label label-theme">Popust</span>
+                                                    {% endif %}
+                                                    {% if product.flOutOfStock == 1 %}
+                                                        <span class="label label-theme">Nema na stanju</span>
+                                                    {% endif %}
+                                                </div>
+                                                {% if product.flOutOfStock == 0 %}
+                                                    <div class="cart-wrap">
+                                                        <ul>
+                                                            <li>
+                                                                <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                    <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                    <input name="qty" type="hidden" value="1">
+                                                                    <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-details text-center">
+                                                <h3 class="theme-color">
+                                                    {% if product.flDiscountVp == 1 %}
+                                                    {% if product.discountVpPriceDin > 0 %}
+                                                        {{ ((product.discountVpPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                        <span class="font-light ml-1">{{ product.priceVpDin  | number_format(2, '.', ',') }} din</span>
+                                                    {% else %}
+                                                        {{ product.discountVpPriceEur | number_format(2, '.', ',') }} eur
+                                                        <span class="font-light ml-1">{{ product.priceVpEur | number_format(2, '.', ',') }} eur</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if product.priceVpDin > 0 %}
+                                                        {{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                    {% else %}
+                                                        {{ product.priceVpEur | number_format(2, '.', ',') }} eur
+                                                    {% endif %}
+                                                    {% endif %}
+                                                </h3>
+                                                <a href="{{ path('proizvod', {'id': product.id}) }}" class="font-default">
+                                                    <h5>{{ product.title }}</h5>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div>
+                                        <div class="product-box">
+                                            <div class="img-wrapper">
+                                                <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                    <img src="{% if product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.slikaMain) }}
+                                                            {% endif %}"
+                                                         class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                </a>
+                                                <div class="label-block">
+                                                    {% if product.flNewProduct == 1 %}
+                                                        <span class="label label-black">Novo</span>
+                                                    {% endif %}
+                                                    {% if product.flDiscount == 1 %}
+                                                        <span class="label label-theme">Popust</span>
+                                                    {% endif %}
+                                                    {% if product.flOutOfStock == 1 %}
+                                                        <span class="label label-theme">Nema na stanju</span>
+                                                    {% endif %}
+                                                </div>
+                                                {% if product.flOutOfStock == 0 %}
+                                                    <div class="cart-wrap">
+                                                        <ul>
+                                                            <li>
+                                                                <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                    <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                    <input name="qty" type="hidden" value="1">
+                                                                    <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product-details text-center">
+                                                <h3 class="theme-color">
+                                                    {% if product.flDiscount == 1 %}
+                                                        {% if product.discountPriceDin > 0 %}
+                                                            {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                            <span class="font-light ml-1">{{ product.priceDin  | number_format(2, '.', ',') }} din</span>
+                                                        {% else %}
+                                                            {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                            <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if product.priceDin > 0 %}
+                                                            {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                        {% else %}
+                                                            {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </h3>
+                                                <a href="{{ path('proizvod', {'id': product.id}) }}" class="font-default">
+                                                    <h5>{{ product.title }}</h5>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div>
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                <img src="{% if product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.slikaMain) }}
+                                                            {% endif %}"
+                                                     class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                            </a>
+                                            <div class="label-block">
+                                                {% if product.flNewProduct == 1 %}
+                                                    <span class="label label-black">Novo</span>
+                                                {% endif %}
+                                                {% if product.flDiscount == 1 %}
+                                                    <span class="label label-theme">Popust</span>
+                                                {% endif %}
+                                                {% if product.flOutOfStock == 1 %}
+                                                    <span class="label label-theme">Nema na stanju</span>
+                                                {% endif %}
+                                            </div>
+                                            {% if product.flOutOfStock == 0 %}
+                                                <div class="cart-wrap">
+                                                    <ul>
+                                                        <li>
+                                                            <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                <input name="qty" type="hidden" value="1">
+                                                                <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-details text-center">
+                                            <h3 class="theme-color">
+                                                {% if product.flDiscount == 1 %}
+                                                    {% if product.discountPriceDin > 0 %}
+                                                        {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                        <span class="font-light ml-1">{{ product.priceDin  | number_format(2, '.', ',') }} din</span>
+                                                    {% else %}
+                                                        {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                        <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if product.priceDin > 0 %}
+                                                        {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                    {% else %}
+                                                        {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                    {% endif %}
+                                                {% endif %}
+                                            </h3>
+                                            <a href="{{ path('proizvod', {'id': product.id}) }}" class="font-default">
+                                                <h5>{{ product.title }}</h5>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

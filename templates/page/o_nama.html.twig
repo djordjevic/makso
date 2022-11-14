@@ -1,0 +1,206 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'O nama - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+
+    <!-- Breadcrumb section start -->
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>O nama</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">O nama</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb section end -->
+
+    <!-- team leader section Start -->
+    <section class="overflow-hidden">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-xl-5 offset-xl-1">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <img src="{{ asset('assets/images/plac/mala1.jpg') }}"
+                                 class="img-fluid rounded-3 about-image" alt="">
+                        </div>
+                        <div class="col-md-6">
+                            <img src="{{ asset('assets/images/plac/mala2.jpg') }}"
+                                 class="img-fluid rounded-3 about-image" alt="">
+                        </div>
+                        <div class="col-12 ratio_40">
+                            <div>
+                                <img src="{{ asset('assets/images/plac/glavna.jpg') }}"
+                                     class="img-fluid rounded-3 team-image bg-img" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-5">
+                    <div class="about-details">
+                        <div>
+                            <h2>KO SMO MI</h2>
+                            <h3>largest Online fashion destination</h3>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, culpa! Asperiores labore
+                                amet nemo ullam odit atque adipisci, hic, aliquid animi fugiat praesentium quidem.
+                                Perspiciatis, expedita!</p>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, culpa!
+                                Asperiores labore
+                                amet nemo ullam odit atque adipisci, hic, aliquid animi fugiat praesentium quidem.
+                                Perspiciatis, expedita!</p>
+                            <a href="{{ path('prodavnica_prikolica') }}" type="button"
+                                    class="btn btn-solid-default">Prodavnica</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- team leader section End -->
+
+    <!-- service section start -->
+    <section class="service-section about-page service-style-2 section-b-space">
+        <div class="container">
+            <div class="row g-4 g-sm-3">
+                <div class="col-xl-3 col-sm-6">
+                    <div class="service-wrap">
+                        <div class="service-icon">
+                            <svg>
+                                <use xlink:href="assets/svg/icons.svg#customer"></use>
+                            </svg>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="mb-2">Servis</h3>
+                            <span class="font-light">Obezbeđeni rezervni delovi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="service-wrap">
+                        <div class="service-icon">
+                            <svg>
+                                <use xlink:href="assets/svg/icons.svg#shop"></use>
+                            </svg>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="mb-2">Dostava</h3>
+                            <span class="font-light">Besplatna dostava na kućnu adresu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="service-wrap">
+                        <div class="service-icon">
+                            <svg>
+                                <use xlink:href="assets/svg/icons.svg#secure-payment"></use>
+                            </svg>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="mb-2">Plaćanje</h3>
+                            <span class="font-light">Plaćanje čekovima građana do 6 rata</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="service-wrap">
+                        <div class="service-icon">
+                            <svg>
+                                <use xlink:href="assets/svg/icons.svg#return"></use>
+                            </svg>
+                        </div>
+                        <div class="service-content">
+                            <h3 class="mb-2">Free Returns</h3>
+                            <span class="font-light">30-days free return policy.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- service section end -->
+
+    <!-- Subscribe Section Start -->
+    {% include 'include/subscribe.html.twig' %}
+    <!-- Subscribe Section End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

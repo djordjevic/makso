@@ -1,0 +1,115 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Registracija - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <!-- home slider -->
+    <!-- Log In Section Start -->
+    <div class="login-section">
+        <div class="materialContainer">
+            <div class="box">
+                <div class="login-title">
+                    <h2>Registrujte se</h2>
+                </div>
+                <br>
+                {% if form_errors(form.firstName) or form_errors(form.lastName) or form_errors(form.gazdinstvo) or form_errors(form.email) or form_errors(form.password.first) or form_errors(form.password.second) %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form_errors(form.firstName) }}
+                        {{ form_errors(form.lastName) }}
+                        {{ form_errors(form.gazdinstvo) }}
+                        {{ form_errors(form.email) }}
+                        {{ form_errors(form.password.first) }}
+                        {{ form_errors(form.password.second) }}
+                    </div>
+                {% endif %}
+                {{ form_start(form, {'attr': {'class' : 'needs-validation'}})}}
+                <div class="input">
+                    {{ form_widget(form.gazdinstvo) }}
+                    <span class="spin"></span>
+                </div>
+                <div class="input">
+                    {{ form_widget(form.firstName) }}
+                    <span class="spin"></span>
+                </div>
+                <div class="input">
+                    {{ form_widget(form.lastName) }}
+                    <span class="spin"></span>
+                </div>
+                <div class="input">
+                    {{ form_widget(form.email) }}
+                    <span class="spin"></span>
+                </div>
+                <div class="input">
+                    {{ form_widget(form.password.first) }}
+                    <span class="spin"></span>
+                </div>
+                <div class="input">
+                    {{ form_widget(form.password.second) }}
+                    <span class="spin"></span>
+                </div>
+                <div class="button login">
+                    <button>
+                        <span>Registrujte se</span>
+                        <i class="fa fa-check"></i>
+                    </button>
+                </div>
+                {{ form_end(form) }}
+                <p><a href="{{ path('app_login') }}" class="theme-color">Već imate nalog?</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- Log In Section End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

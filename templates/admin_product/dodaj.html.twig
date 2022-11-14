@@ -1,0 +1,643 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Admin | Proizvodi - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header Start-->
+        {% include 'admin/admin_include/header.html.twig' %}
+        <!-- Page Header Ends-->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            {% include 'admin/admin_include/navigation.html.twig' %}
+            <!-- Page Sidebar Ends-->
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="title-header">
+                    <h5>Dodajte novi proizvod</h5>
+                </div>
+
+                <!-- New Product Add Start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="pills-home-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                            type="button">Informacije</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-cene-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-cene"
+                                                            type="button">Cene</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-desc-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-desc"
+                                                            type="button">Opis</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-meta-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-atr"
+                                                            type="button">Atributi</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-slike-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-slike"
+                                                            type="button">Slike</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-meta-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-meta"
+                                                            type="button">Meta</button>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                                    {% if form_errors(form.title)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.title) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form_errors(form.code)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.code) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form_errors(form.seller)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.seller) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form_errors(form.proizvodjac)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.proizvodjac) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form_errors(form.kategorija)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.kategorija) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form_errors(form.priceDin)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.priceDin) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {% if form_errors(form.priceVpDin)%}
+                                                        <div class="alert alert-danger" role="alert">
+                                                            {{ form_errors(form.priceVpDin) }}
+                                                        </div>
+                                                    {% endif %}
+                                                    {{ form_start(form, {'attr': {'class' : 'needs-validation'}})}}
+                                                            <div class="mb-4 row align-items-center">
+                                                                <label class="form-label-title col-lg-2 col-md-3 mb-0">Naziv</label>
+                                                                <div class="col-md-9 col-lg-10">
+                                                                    {{ form_widget(form.title) }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-4 row align-items-center">
+                                                                <label class="col-lg-2 col-md-3 col-form-label form-label-title">Šifra</label>
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(form.code) }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-4 row align-items-center">
+                                                                <label
+                                                                        class="col-lg-2 col-md-3 col-form-label form-label-title">Dobavljač</label>
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(form.seller) }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-4 row align-items-center">
+                                                                <label
+                                                                        class="col-lg-2 col-md-3 col-form-label form-label-title">Proizvođač</label>
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(form.proizvodjac) }}
+                                                                </div>
+                                                            </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                                class="col-lg-2 col-md-3 col-form-label form-label-title">Opcije za traktore</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.options) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-lg-2 col-md-3 col-form-label form-label-title">Opcioni proizvodi</label>
+                                                        <div class="col-md-6">
+                                                            <select class="form-control" name="optional[]" multiple>
+                                                                {% for pro in oproizvodi %}
+                                                                    <option value="{{ pro.id }}">{{ pro.title }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            {% if opProizvodi is not empty %}
+                                                                {% for opPro in opProizvodi %}
+                                                                    {{ opPro }}{% if  not loop.last %},{% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+
+                                                            <div class="row align-items-center">
+                                                                <label class="col-lg-2 col-md-3 col-form-label form-label-title">Kategorija</label>
+                                                                <div class="col-md-6">
+                                                                    {{ form_widget(form.kategorija) }}
+                                                                </div>
+                                                            </div>
+
+                                                </div>
+
+                                                <div class="tab-pane fade" id="pills-cene" role="tabpanel">
+                                                    <div class="card-header-1">
+                                                        <h5>Regularna cena</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Poreska stopa</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.taxPercentage) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.priceDin) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.priceEur) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.priceVpDin) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.priceVpEur) }}
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="card-header-1">
+                                                        <h5>Cena sa popustom</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod je na popustu</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.flDiscount) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.discountPriceDin) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.discountPriceEur) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-header-1">
+                                                        <h5>Cena sa popustom ka pravnim licima</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod je na popustu za pravna lica</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.flDiscountVp) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.discountVpPriceDin) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.discountVpPriceEur) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="pills-atr" role="tabpanel">
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #1</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr1) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #2</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr2) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #3</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr3) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #4</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr4) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #5</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr5) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #6</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr6) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #7</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr7) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #8</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr8) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #9</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr9) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #10</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.atr10) }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="tab-pane fade" id="pills-desc" role="tabpanel">
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Opis</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.caracteristic) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Karakteristike</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.charasteristicsDescription) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Težina u kg</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.weight) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Info o dostavi</label>
+                                                        <div class="col-md-10">
+                                                            {{ form_widget(form.deliveryCharacteristics) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena dostave</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.deliveryPrice) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Vreme dostave u danima</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.deliveryTime) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="pills-slike" role="tabpanel">
+                                                    <div class="card-header-1">
+                                                        <h5>Glavna slika</h5>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Glavna slika proizvoda</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slikaMain) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slikaMain | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slikaMain) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+
+                                                    <div class="card-header-1">
+                                                        <h5>Ostale slike</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #1</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika1) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika1 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika1) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #2</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika2) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika2 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika2) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #3</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika3) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika3 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika3) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #4</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika4) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika4 | length > 0) %}
+                                                        <div>
+                                                            <img src="{{ asset(prod.slika4) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #5</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika5) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika5 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika5) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #6</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika6) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika6 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika6) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #7</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika7) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika7 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika7) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #8</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika8) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika8 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika8) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #9</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika9) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika9 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika9) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #10</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika10) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika10 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika10) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #11</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika11) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika11 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika11) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #12</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika12) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika12 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika12) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #13</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika13) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika13 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika13) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #14</label>
+                                                        <div class="col-md-3">
+                                                            {{ form_widget(form.slika14) }}
+                                                        </div>
+                                                        {% if (prod != '') and (prod.slika14 | length > 0) %}
+                                                            <div>
+                                                                <img src="{{ asset(prod.slika14) }}" class="img-thumbnail" width="150" height="100" alt="">
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="pills-meta" role="tabpanel">
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Naziv proizvoda</label>
+                                                        <div class="col-sm-10">
+                                                            {{ form_widget(form.metaTitle) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Opis proizvoda</label>
+                                                        <div class="col-sm-10">
+                                                            {{ form_widget(form.metaDescription) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Ključne reči</label>
+                                                        <div class="col-sm-10">
+                                                            {{ form_widget(form.metaKeywords) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="pills-home-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                            type="button">Podešavanja</button>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                                    <div class="row">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod nema na stanju</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.flOutOfStock) }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod je nov</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.flNewProduct) }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod je aktivan</label>
+                                                        <div class="col-md-6">
+                                                            {{ form_widget(form.active) }}
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                    <br>
+                                                    <div class="button login">
+                                                        <button type="submit" class="align-items-center btn btn-theme">
+                                                            <span>Dodajte </span>
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Product Add End -->
+                <!-- footer start-->
+                {% include 'admin/admin_include/footer.html.twig' %}
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End-->
+
+    <!-- Modal Start -->
+    {% include 'admin/admin_include/logout.html.twig' %}
+    <!-- Modal End -->
+{% endblock content %}
+
+{% block footerjavascript %}
+    {# Javascript Block #}
+    <script src="{{ asset('assets/javascript/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('assets/javascript/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('textarea.ckeditor').ckeditor();
+        });
+    </script>
+{% endblock footerjavascript %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="manifest" href="{{ asset('./manifest.json') }}">
+    <link rel="icon" href="{{ asset('assets/images/favicon/4.png') }}" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/favicon/4.png') }}">
+    <title>{% block title %}{% endblock title %}</title>
+    {% block metatags %}
+        {#        <meta name="google-site-verification" content="" />#}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+        <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+        <meta name="author" content="barba">
+        <meta name="copyright" content="© prikolica.shop" />
+        <link rel="icon" href="{{ asset('admin_assets/images/favicon.png') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('admin_assets/images/favicon.png') }}" type="image/x-icon">
+    {% endblock metatags %}
+    {% block customstylesheet %}
+        <!-- Google font-->
+        <link
+                href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+                rel="stylesheet">
+
+        <!-- Linear Icon css -->
+        <link rel="stylesheet" href="{{ asset('admin_assets/css/linearicon.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('assets/css/css_dataTables.bootstrap5.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/twitter-bootstrap_5.1.3_css_bootstrap.css') }}">
+
+        <!-- fontawesome css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vendors/font-awesome.css') }}">
+
+        <!-- Themify icon css-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vendors/themify.css') }}">
+
+        <!-- ratio css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/ratio.css') }}">
+
+        <!-- Feather icon css-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vendors/feather-icon.css') }}">
+
+        <!-- Plugins css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vendors/scrollbar.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vendors/animate.css') }}">
+
+        <!-- Bootstrap css-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vendors/bootstrap.css') }}">
+
+        <!-- vector map css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/vector-map.css') }}">
+
+        <!-- slick slider css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/slick.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/slick-theme.css') }}">
+
+        <!-- App css -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/style.css') }}">
+
+        <!-- Responsive css-->
+        <link rel="stylesheet" type="text/css" href="{{ asset('admin_assets/css/responsive.css') }}">
+
+    {% endblock customstylesheet %}
+
+</head>
+
+<body class="theme-color1 light ltr">
+{% block content %}
+{% endblock content %}
+
+{% block includejavascript %}
+    <!-- latest js -->
+    <script src="{{ asset('admin_assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('assets/js/datatables.net_1.12.1_js_dataTables.bootstrap5.js') }}"></script>
+
+
+    <!-- Bootstrap js -->
+    <script src="{{ asset('admin_assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <!-- feather icon js -->
+    <script src="{{ asset('admin_assets/js/icons/feather-icon/feather.min.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/icons/feather-icon/feather-icon.js') }}"></script>
+    <!-- scrollbar simplebar js -->
+    <script src="{{ asset('admin_assets/js/scrollbar/simplebar.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/scrollbar/custom.js') }}"></script>
+    <!-- Sidebar jquery -->
+    <script src="{{ asset('admin_assets/js/config.js') }}"></script>
+    <!-- tooltip init js -->
+    <script src="{{ asset('admin_assets/js/tooltip-init.js') }}"></script>
+    <!-- Plugins JS -->
+    <script src="{{ asset('admin_assets/js/sidebar-menu.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/notify/bootstrap-notify.min.js') }}"></script>
+{#    <script src="{{ asset('admin_assets/js/notify/index.js') }}"></script>#}
+
+    <!-- Apexchar js -->
+    <script src="{{ asset('admin_assets/js/chart/apex-chart/apex-chart1.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/chart/apex-chart/moment.min.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/chart/apex-chart/apex-chart.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/chart/apex-chart/stock-prices.js') }}"></script>
+    <script src="{{ asset('admin_assets/js/chart/apex-chart/chart-custom1.js') }}"></script>
+
+    <!-- customizer js -->
+    <script src="{{ asset('admin_assets/js/customizer.js') }}"></script>
+
+    <!-- ratio js -->
+    <script src="{{ asset('admin_assets/js/ratio.js') }}"></script>
+
+    <!-- Theme js -->
+    <script src="{{ asset('admin_assets/js/script.js') }}"></script>
+    <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+{% endblock includejavascript %}
+
+{% block footerjavascript %}
+{% endblock footerjavascript %}
+
+</body>
+
+</html>

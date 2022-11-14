@@ -1,0 +1,132 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Prodavnica - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <!-- Breadcrumb section start -->
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Izdavanje auto prikolica</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item" aria-current="page">Kupovina</li>
+                            <li class="breadcrumb-item active" aria-current="page">Prodavnica</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb section end -->
+    <section class="section-b-space">
+        <section class="section-b-space">
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <h3 class="mb-3">Upit za proveru dostupnosti</h3>
+                        {{ form_start(form, {'attr': {'class' : 'needs-validation'}})}}
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <label for="fname" class="form-label">Ime i prezime</label>
+                                    {{ form_widget(form.ime) }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="lname" class="form-label">Email</label>
+                                    {{ form_widget(form.email) }}
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="mobilni" class="form-label">Broj telefona</label>
+                                    {{ form_widget(form.mobilni) }}
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname" class="form-label">Datum početka iznajmljivanja</label>
+                                    <div class="input-group">
+                                        {{ form_widget(form.startDate) }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lname" class="form-label">Datum završetka iznajmljivanja</label>
+                                    <div class="input-group">
+                                        {{ form_widget(form.endDate) }}
+                                    </div>
+                                </div>
+                                <button class="btn btn-solid-default mt-4" type="submit">Pošaljite upit</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+    <!-- Shop Section end -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+{% endblock footerjavascript %}

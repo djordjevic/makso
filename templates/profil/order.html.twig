@@ -1,0 +1,143 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Profil - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Profil</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Porudžbina #{{ order.id }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Order Track Section Start -->
+    <section class="section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 overflow-hidden">
+                    <div class="order-left-image ratio_asos">
+                        <div class="order-image-contain">
+                            <h4>{{ order.imePrimaoca }} {{ order.prezimePrimaoca }}</h4>
+
+                            <div class="tracker-number">
+                                <p class="font-light">ID : <span>{{ order.id  }}</span></p>
+                                <p class="font-light">Datum : <span>{{ order.dateAdded | date("d.m.Y") }}</span></p>
+                                <p class="font-light">Ukupna cena: <span>{{ (order.totalPricePdv | round) | number_format(2, '.', ',') }}</span></p>
+                                <p class="font-light">Status: <span>
+                                        {% if order.orderStatus == 1 %}
+                                            Kreirana
+                                        {% elseif  order.orderStatus == 2%}
+                                            Poslata
+                                        {% else %}
+                                            Otkazana
+                                        {% endif %}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 overflow-visible">
+                    <div class="tracker-table">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr class="table-head">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Proizvod</th>
+                                    <th scope="col">Količina</th>
+                                    <th scope="col">Cena</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in orderProducts %}
+                                <tr>
+                                    <td>
+                                        <p>{{ loop.index }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ product.productName }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ product.quantity }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-bold">{{ product.pricePdv | number_format(2, '.', ',') }}</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Order Track Section End -->
+
+    <!-- Subscribe Section Start -->
+    {% include 'include/subscribe.html.twig' %}
+    <!-- Subscribe Section End -->
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

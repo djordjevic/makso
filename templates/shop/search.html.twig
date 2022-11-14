@@ -1,0 +1,423 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Pretraga - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Pretraga</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Pretraga</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Search bar section start -->
+    <section class="search-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="title title1 text-center">
+                        <h3>Rezultati pretrage za: "{{ keywords }}"</h3>
+
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <div class="search-bar">
+                        <form id="search" action="{{ path('pretraga') }}" method="get">
+                        <div class="input-group search-bar w-100">
+                            <input type="search" class="form-control" placeholder="Unesite pojam za pretragu" name="keywords">
+                            <button class="input-group-text" id="basic-addon3" type="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Search bar section end -->
+
+    <!-- product section start -->
+    <section class="ratio_asos section-b-space">
+        <div class="container">
+            <div class="row g-sm-4 g-3 row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 gx-sm-4 gx-3 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
+                {% if (paginationProducts is defined) and (paginationProducts | length > 0) %}
+                    {% for product in paginationProducts %}
+                        {% if app.user %}
+                            {% if app.user.FirmaIliFizickoLice in [1,4]  %}
+                                <div>
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                    <img src="{% if product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.slikaMain) }}
+                                                            {% endif %}"
+                                                         class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                </a>
+                                            </div>
+                                            <div class="label-block">
+                                                {% if product.flNewProduct == 1 %}
+                                                    <span class="label label-black">Novo</span>
+                                                {% endif %}
+                                                {% if product.flDiscountVp == 1 %}
+                                                    <span class="label label-theme">Popust</span>
+                                                {% endif %}
+                                                {% if product.flOutOfStock == 1 %}
+                                                    <span class="label label-theme">Nema na stanju</span>
+                                                {% endif %}
+                                            </div>
+                                            {% if product.flOutOfStock == 0 %}
+                                                <div class="cart-wrap">
+                                                    <ul>
+                                                        <li>
+                                                            <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                <input name="qty" type="hidden" value="1">
+                                                                <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-details">
+                                            <div class="rating-details">
+                                                        <span class="font-light grid-content">
+                                                            {% if product.flDiscountVp == 1 %}
+                                                                {% if product.discountVpPriceDin > 0 %}
+                                                                    {{ ((product.discountVpPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                    <del class="font-light ml-1">{{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                {% else %}
+                                                                    {{ product.discountVpPriceEur | number_format(2, '.', ',') }} eur
+                                                                    <span class="font-light ml-1">{{ product.priceVpEur | number_format(2, '.', ',') }} eur</span>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                {% if product.priceVpDin > 0 %}
+                                                                    {{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                {% else %}
+                                                                    {{ product.priceVpEur | number_format(2, '.', ',') }} eur
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        </span>
+                                            </div>
+                                            <div class="main-price">
+                                                <h5><a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                        {{ product.title }}
+                                                    </a></h5>
+                                                <div class="listing-content">
+                                                    <span class="font-light">{{ product.kategorija.getName() }}</span>
+                                                    <p class="font-light">{{ product.caracteristic | raw }}</p>
+                                                    <h4 class="theme-color">
+                                                        {% if product.flDiscountVp == 1 %}
+                                                            {% if product.discountVpPriceDin > 0 %}
+                                                                {{ ((product.discountVpPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                <del class="font-light ml-1">{{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                            {% else %}
+                                                                {{ product.discountVpPriceEur | number_format(2, '.', ',') }} eur
+                                                                <span class="font-light ml-1">{{ product.priceVpEur | number_format(2, '.', ',') }} eur</span>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if product.priceVpDin > 0 %}
+                                                                {{ ((product.priceVpDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                            {% else %}
+                                                                {{ product.priceVpEur | number_format(2, '.', ',') }} eur
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </h4>
+                                                </div>
+                                                {% if product.flOutOfStock == 0 %}
+                                                    <br>
+                                                    <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                        <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                        <input name="qty" type="hidden" value="1">
+                                                        <button type="submit" class="btn listing-content">Dodajte u korpu</button>
+                                                    </form>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div>
+                                    <div class="product-box">
+                                        <div class="img-wrapper">
+                                            <div class="front">
+                                                <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                    <img src="{% if product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.slikaMain) }}
+                                                            {% endif %}"
+                                                         class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                                </a>
+                                            </div>
+                                            <div class="label-block">
+                                                {% if product.flNewProduct == 1 %}
+                                                    <span class="label label-black">Novo</span>
+                                                {% endif %}
+                                                {% if product.flDiscount == 1 %}
+                                                    <span class="label label-theme">Popust</span>
+                                                {% endif %}
+                                                {% if product.flOutOfStock == 1 %}
+                                                    <span class="label label-theme">Nema na stanju</span>
+                                                {% endif %}
+                                            </div>
+                                            {% if product.flOutOfStock == 0 %}
+                                                <div class="cart-wrap">
+                                                    <ul>
+                                                        <li>
+                                                            <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                                <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                                <input name="qty" type="hidden" value="1">
+                                                                <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-details">
+                                            <div class="rating-details">
+                                                    <span class="font-light grid-content">
+                                                        {% if product.flDiscount == 1 %}
+                                                            {% if product.discountPriceDin > 0 %}
+                                                                {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                {% else %}
+                                                                {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if product.priceDin > 0 %}
+                                                                {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                            {% else %}
+                                                                {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </span>
+                                            </div>
+                                            <div class="main-price">
+                                                <h4><a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                        {{ product.title }}
+                                                    </a></h4>
+                                                <div class="listing-content">
+                                                    <span class="font-light">{{ product.kategorija.getName() }}</span>
+                                                    <p class="font-light">{{ product.caracteristic | raw }}</p>
+                                                    <h4 class="theme-color">
+                                                        {% if product.flDiscount == 1 %}
+                                                            {% if product.discountPriceDin > 0 %}
+                                                                {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                            {% else %}
+                                                                {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if product.priceDin > 0 %}
+                                                                {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                            {% else %}
+                                                                {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </h4>
+                                                </div>
+                                                {% if product.flOutOfStock == 0 %}
+                                                    <br>
+                                                    <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                        <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                        <input name="qty" type="hidden" value="1">
+                                                        <button type="submit" class="btn listing-content">Dodajte u korpu</button>
+                                                    </form>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div>
+                                <div class="product-box">
+                                    <div class="img-wrapper">
+                                        <div class="front">
+                                            <a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                <img src="{% if product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.slikaMain) }}
+                                                            {% endif %}"
+                                                     class="bg-img blur-up lazyload" alt="{{ product.seo }}">
+                                            </a>
+                                        </div>
+                                        <div class="label-block">
+                                            {% if product.flNewProduct == 1 %}
+                                                <span class="label label-black">Novo</span>
+                                            {% endif %}
+                                            {% if product.flDiscount == 1 %}
+                                                <span class="label label-theme">Popust</span>
+                                            {% endif %}
+                                            {% if product.flOutOfStock == 1 %}
+                                                <span class="label label-theme">Nema na stanju</span>
+                                            {% endif %}
+                                        </div>
+                                        {% if product.flOutOfStock == 0 %}
+                                            <div class="cart-wrap">
+                                                <ul>
+                                                    <li>
+                                                        <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                            <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                            <input name="qty" type="hidden" value="1">
+                                                            <button class="btn btn-outline-default" type="submit"><i data-feather="shopping-bag"></i></button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="product-details">
+                                        <div class="rating-details">
+                                                    <span class="font-light grid-content">
+                                                        {% if product.flDiscount == 1 %}
+                                                            {% if product.discountPriceDin > 0 %}
+                                                                {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                                <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                                {% else %}
+                                                                {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                                <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {% if product.priceDin > 0 %}
+                                                                {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                            {% else %}
+                                                                {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    </span>
+                                        </div>
+                                        <div class="main-price">
+                                            <h4><a href="{{ path('proizvod', {'id': product.id}) }}">
+                                                    {{ product.title }}
+                                                </a></h4>
+                                            <div class="listing-content">
+                                                <span class="font-light">{{ product.kategorija.getName() }}</span>
+                                                <p class="font-light">{{ product.caracteristic | raw }}</p>
+                                                <h4 class="theme-color">
+                                                    {% if product.flDiscount == 1 %}
+                                                        {% if product.discountPriceDin > 0 %}
+                                                            {{ ((product.discountPriceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                            <del class="font-light ml-1">{{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din</del>
+                                                        {% else %}
+                                                            {{ product.discountPriceEur | number_format(2, '.', ',') }} eur
+                                                            <span class="font-light ml-1">{{ product.priceEur | number_format(2, '.', ',') }} eur</span>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {% if product.priceDin > 0 %}
+                                                            {{ ((product.priceDin * ((product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }} din
+                                                        {% else %}
+                                                            {{ product.priceEur | number_format(2, '.', ',') }} eur
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </h4>
+                                            </div>
+                                            {% if product.flOutOfStock == 0 %}
+                                                <br>
+                                                <form method="post" action="{{ path('korpa_dodaj') }}" name="form" style="margin:0 auto;">
+                                                    <input name="pid" type="hidden" id="pid" value="{{ product.id }}">
+                                                    <input name="qty" type="hidden" value="1">
+                                                    <button type="submit" class="btn listing-content">Dodajte u korpu</button>
+                                                </form>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <nav class="page-section">
+                {{ knp_pagination_render(paginationProducts) }}
+            </nav>
+        </div>
+    </section>
+    <!-- product section end -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

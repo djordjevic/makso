@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Admin | Proizvodi - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header Start-->
+        {% include 'admin/admin_include/header.html.twig' %}
+        <!-- Page Header Ends-->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            {% include 'admin/admin_include/navigation.html.twig' %}
+            <!-- Page Sidebar Ends-->
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="title-header">
+                    <h5>Lista proizvoda</h5>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <!-- Table Start -->
+                                <div class="card-body">
+                                    <table id="example" class="table table-striped" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Id</th>
+                                            <th>Kod</th>
+                                            <th>Slika</th>
+                                            <th>Naziv</th>
+                                            <th>Kategorija</th>
+                                            <th>Cena MP</th>
+                                            <th>Cena VP</th>
+                                            <th>Kreiran</th>
+                                            <th>Aktivan</th>
+                                            <th>Pregledajte</th>
+                                            <th>Izmenite</th>
+                                            <th>Obrišite</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for proizvod in proizvodi %}
+                                            <tr>
+                                                <td>{{ loop.index }} </td>
+                                                <td>{{ proizvod.id }}</td>
+                                                <td>{{ proizvod.code }}</td>
+                                                <td><img src="{% if proizvod.slikaMain is null  %}
+                                                {{ asset('assets/images/products/no-image.jpg') }}
+{% else %}
+{{ asset(proizvod.slikaMain) }}
+{% endif %}" class="img-thumbnail" width="100" height="75"
+                                                         alt="{{ proizvod.slikaMain }}"></td>
+                                                <td><a href="{{ path('app_admin_view_product', {id: proizvod.id}) }}">{{ proizvod.title }}</a></td>
+                                                <td>{{ proizvod.kategorija.getName() }}</td>
+                                                <td>{{ (proizvod.priceDin | round) | number_format(2, '.', ',') }}</td>
+                                                <td>{{ (proizvod.priceVpDin | round) | number_format(2, '.', ',') }}</td>
+                                                <td>{{ proizvod.created | date("d.m.Y") }}</td>
+                                                <td class="text-center">
+                                                    {% if proizvod.active == 1 %}
+                                                        <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                    {% else %}
+                                                        <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                    {% endif %}
+                                                </td>
+                                                <td class="text-center"><a href="{{ path('app_admin_view_product', {id: proizvod.id}) }}"><i data-feather="eye" style="color:MediumSeaGreen;"></i></a></td>
+                                                <td class="text-center"><a href="{{ path('app_admin_new_product', {id: proizvod.id}) }}"><i data-feather="edit"></i></a></td>
+                                                <td class="text-center"><a data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ proizvod.id }}" href="javascript:void(0)"><i data-feather="trash-2"></i></a></td>
+                                            </tr>
+                                            <div class="modal fade" id="staticBackdrop{{ proizvod.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog  modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Obrišite proizvod</h5>
+                                                            <p>Da li ste sigurni?</p>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <div class="button-box">
+                                                                <button type="button" class="btn btn--no " data-bs-dismiss="modal">Ne</button>
+                                                                <a class="btn  btn--yes btn-primary" href="{{ path('app_admin_delete_product', {id: proizvod.id}) }}" role="button">Da</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Table End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+                <!-- footer start-->
+                {% include 'admin/admin_include/footer.html.twig' %}
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End-->
+
+    <!-- Modal Start -->
+    {% include 'admin/admin_include/logout.html.twig' %}
+    <!-- Modal End -->
+{% endblock content %}
+
+{% block footerjavascript %}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json',
+                },
+            });
+        });
+    </script>
+{% endblock footerjavascript %}

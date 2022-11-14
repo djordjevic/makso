@@ -1,0 +1,59 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Test - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+
+    <a id = "loadstudent" href = "#">Load student information</a>
+
+    <table class = "table">
+        <tbody id = "student"></tbody>
+    </table>
+
+
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+    <script language = "javascript">
+        $(document).ready(function(){
+            $("#loadstudent").on("click", function(event){
+                $.ajax({
+                    url:        '/test/',
+                    type:       'POST',
+                    dataType:   'json',
+                    async:      true,
+
+                    success: function(data, status) {
+                        var e = $('<tr><th>Name</th><th>Address</th></tr>');
+                        $('#student').html('');
+                        $('#student').append(e);
+
+                        for(i = 0; i < data.length; i++) {
+                            student = data[i];
+                            var e = $('<tr><td id = "name"></td><td id = "address"></td></tr>');
+
+                            $('#name', e).html(student['name']);
+                            $('#address', e).html(student['address']);
+                            $('#student').append(e);
+                        }
+                    },
+                    error : function(xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock footerjavascript %}

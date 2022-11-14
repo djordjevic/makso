@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Admin | Rezervacije - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header Start-->
+        {% include 'admin/admin_include/header.html.twig' %}
+        <!-- Page Header Ends-->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            {% include 'admin/admin_include/navigation.html.twig' %}
+            <!-- Page Sidebar Ends-->
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="title-header">
+                    <h5>Lista upita za rezervaciju</h5>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <!-- Table Start -->
+                                <div class="card-body">
+                                    <table id="example" class="table table-striped" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Ime</th>
+                                            <th>Email</th>
+                                            <th>Telefon</th>
+                                            <th>Datum od</th>
+                                            <th>Datum do</th>
+                                            <th>Pregledajte</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for upit in upiti %}
+                                            <tr>
+                                                <td>{{ loop.index }} </td>
+                                                <td>{{ upit.ime }}</td>
+                                                <td>{{ upit.email }}</td>
+                                                <td>{{ upit.mobilni }}</td>
+                                                <td>{{ upit.startDate | date("d.m.Y") }}</td>
+                                                <td>{{ upit.endDate | date("d.m.Y") }}</td>
+                                                <td class="text-center"><a href="{{ path('app_admin_view_reservation', {id: upit.id}) }}"><i data-feather="eye" style="color:MediumSeaGreen;"></i></a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Table End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+                <!-- footer start-->
+                {% include 'admin/admin_include/footer.html.twig' %}
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End-->
+    <!-- Modal Start -->
+    {% include 'admin/admin_include/logout.html.twig' %}
+    <!-- Modal End -->
+{% endblock content %}
+
+{% block footerjavascript %}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json',
+                },
+            });
+        });
+    </script>
+{% endblock footerjavascript %}

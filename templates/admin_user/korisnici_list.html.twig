@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Admin | Korisnici - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header Start-->
+        {% include 'admin/admin_include/header.html.twig' %}
+        <!-- Page Header Ends-->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            {% include 'admin/admin_include/navigation.html.twig' %}
+            <!-- Page Sidebar Ends-->
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="title-header title-header-1">
+                    <h5>Lista korisnika</h5>
+                    <form class="d-inline-flex">
+                        <a href="{{ path('app_admin_new_user') }}" class="align-items-center btn btn-theme">
+                            <i data-feather="plus-square"></i>Dodajte
+                        </a>
+                    </form>
+                </div>
+                <!-- All User Table Start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <!-- Table Start -->
+                                <div class="card-body">
+                                    <table id="example" class="table table-striped" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Id</th>
+                                            <th>Ime</th>
+                                            <th>Prezime</th>
+                                            <th>Email</th>
+                                            <th>Kreiran</th>
+                                            <th>Pregledajte</th>
+                                            <th>Obrišite</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for korisnik in korisnici %}
+                                            <tr>
+                                                <td>{{ loop.index }} </td>
+                                                <td>{{ korisnik.id }}</td>
+                                                <td><strong>{{ korisnik.firstName }}</strong></td>
+                                                <td><strong>{{ korisnik.lastName }}</strong></td>
+                                                <td>{{ korisnik.email }}</td>
+                                                <td>{{ korisnik.created | date("d.m.Y") }}</td>
+                                                <td class="text-center"><a href="{{ path('app_admin_view_user', {id: korisnik.id}) }}"><i data-feather="eye" style="color:MediumSeaGreen;"></i></a></td>
+{#                                                <td class="text-center"><a href="{{ path('app_admin_new_user', {id: korisnik.id}) }}"><i data-feather="edit"></i></a></td>#}
+                                                <td class="text-center"><a data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ korisnik.id }}" href="javascript:void(0)"><i data-feather="trash-2"></i></a></td>
+                                            </tr>
+                                            <div class="modal fade" id="staticBackdrop{{ korisnik.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog  modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Obrišite korisnika</h5>
+                                                            <p>Da li ste sigurni?</p>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <div class="button-box">
+                                                                <button type="button" class="btn btn--no " data-bs-dismiss="modal">Ne</button>
+                                                                <a class="btn  btn--yes btn-primary" href="{{ path('app_admin_delete_user', {id: korisnik.id}) }}" role="button">Da</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Table End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- All User Table Ends-->
+                <!-- footer start-->
+                {% include 'admin/admin_include/footer.html.twig' %}
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End-->
+
+    <!-- Modal Start -->
+    {% include 'admin/admin_include/logout.html.twig' %}
+    <!-- Modal End -->
+{% endblock content %}
+
+{% block footerjavascript %}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json',
+                },
+            });
+        });
+    </script>
+{% endblock footerjavascript %}

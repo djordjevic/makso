@@ -1,0 +1,43 @@
+<div class="mobile-menu d-sm-none">
+    <ul>
+        <li>
+            <a href="{{ path('pocetna') }}" class="active">
+                <i data-feather="home"></i>
+                <span>Početna</span>
+            </a>
+        </li>
+{#        <li>#}
+{#            <a href="javascript:void(0)" class="toggle-category">#}
+{#                <i data-feather="align-justify"></i>#}
+{#                <span>Category</span>#}
+{#            </a>#}
+{#        </li>#}
+        <li>
+            <a href="{{ path('korpa') }}">
+                <i data-feather="shopping-bag"></i>
+                <span>Korpa</span>
+            </a>
+        </li>
+{#        <li>#}
+{#            <a href="wishlist.html">#}
+{#                <i data-feather="heart"></i>#}
+{#                <span>Wishlist</span>#}
+{#            </a>#}
+{#        </li>#}
+        <li><a href="
+            {% if app.user %}
+                {% if app.user.FirmaIliFizickoLice == 1  %}
+                    {{ path('app_firma') }}
+                {% else %}
+                    {{ path('app_profil') }}
+                {% endif %}
+            {% else %}
+                {{ path('app_login') }}
+            {% endif %}
+            ">
+                <i data-feather="user"></i>
+                <span>Profil</span>
+            </a>
+        </li>
+    </ul>
+</div>

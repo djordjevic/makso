@@ -1,0 +1,239 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Potvrda kupovine - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Kupovina</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Potvrda kupovine</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Order Success Section Start -->
+    <section class="pt-0">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 p-0">
+                    <div class="success-icon">
+                        <div class="main-container">
+                            <div class="check-container">
+                                <script src="https://cdn.lordicon.com/xdjxvujz.js"></script>
+                                <lord-icon
+                                        src="https://cdn.lordicon.com/lupuorrc.json"
+                                        trigger="loop"
+                                        delay="2000"
+                                        colors="primary:#008000,secondary:#7e7e7e"
+                                        style="width:250px;height:250px">
+                                </lord-icon>
+                            </div>
+                        </div>
+                        <div class="success-contain">
+                            <h4>Uspešno ste kreirali porudžbinu</h4>
+                            <h5 class="font-light">Porudžbina je uspešno kreirana i uskoro ćete biti kontaktirani od strane naših administratora!</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Order Success Section End -->
+
+    <!-- Oder Details Section Start -->
+    <section class="section-b-space cart-section order-details-table">
+        <div class="container">
+            <div class="title title1 title-effect mb-1 title-left">
+                <h2 class="mb-3">Detalji porudžbine</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table cart-table table-borderless">
+                            <tbody>
+                            {% for product in orderProducts %}
+                            <tr class="table-order">
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <img src="{% if product.proizvod.getSlikaMain() is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.proizvod.getSlikaMain()) }}
+                                                            {% endif %}"
+                                             class="img-fluid blur-up lazyload" alt="">
+                                    </a>
+                                </td>
+                                <td>
+                                    <p>Proizvod</p>
+                                    <h5>{{ product.productName }}</h5>
+                                </td>
+                                <td>
+                                    <p>Količina</p>
+                                    <h5>{{ product.quantity }}</h5>
+                                </td>
+                                <td>
+                                    <p>Cena</p>
+                                    <h5>{{ product.pricePdv | number_format(2, '.', ',') }}</h5>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h5 class="font-light">Ukupna cena :</h5>
+                                </td>
+                                <td>
+                                    <h4>{{ (order.totalPrice | round) | number_format(2, '.', ',') }}</h4>
+                                </td>
+                            </tr>
+
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h5 class="font-light">PDV :</h5>
+                                </td>
+                                <td>
+                                    <h4>{{ ((order.totalPricePdv - order.totalPrice) | round) | number_format(2, '.', ',') }}</h4>
+                                </td>
+                            </tr>
+
+                            <tr class="table-order">
+                                <td colspan="3">
+                                    <h4 class="theme-color fw-bold">UKUPNO SA PDV:</h4>
+                                </td>
+                                <td>
+                                    <h4 class="theme-color fw-bold">{{ (order.totalPricePdv | round) | number_format(2, '.', ',') }}</h4>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="order-success">
+                        <div class="row g-4">
+                            <div class="col-sm-6">
+                                <h4>Pregled porudžbine</h4>
+                                <ul class="order-details">
+                                    <li>ID: {{ order.id  }}</li>
+                                    <li>Datum: {{ order.dateAdded | date("d.m.Y") }}</li>
+                                    <li>Ukupna cena: {{ (order.totalPricePdv | round) | number_format(2, '.', ',') }}</li>
+                                </ul>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <h4>Adresa za dostavu</h4>
+                                <ul class="order-details">
+                                    <li>{{ order.imePrimaoca }} {{ order.prezimePrimaoca }}</li>
+                                    <li>{{ order.adresaPrimaoca }}</li>
+                                    <li>{{ order.gradPrimaoca }}, {{ order.pttPrimaoca }}</li>
+                                    <li>Tel: {{ order.telefonPrimaoca }}</li>
+                                </ul>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="payment-mode">
+                                    <h4>Način plaćanja</h4>
+                                    <p>
+                                        {% if order.nacinPlacanja == 1 %}
+                                            Pouzeće
+                                        {% elseif order.nacinPlacanja == 2 %}
+                                            Čekovi
+                                        {% elseif order.nacinPlacanja == 3 %}
+                                            Kartica
+                                        {% else  %}
+                                            Uplata na račun
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="delivery-sec">
+                                    <h3>Rok dostave: <span>2 radna dana</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Order Details Section End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

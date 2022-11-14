@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="multikart">
+    <meta name="keywords" content="multikart">
+    <meta name="author" content="multikart">
+    <link rel="shortcut icon" href="{{ asset('assets_pdf/images/icon.png') }}" type="image/x-icon">
+    <title>Voxo | Invoice template </title>
+
+    <!--Google font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset_pdf/css/vendors/font-awesome.css') }}">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset_pdf/css/vendors/bootstrap.css') }}">
+
+    <!-- Theme css -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('asset_pdf/css/style.css') }}">
+
+</head>
+
+<body class="theme-color2 bg-light">
+
+<!-- invoice start -->
+<section class="theme-invoice-3 section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 m-auto">
+                <div class="invoice-wrapper">
+                    <div class="invoice-header">
+                        <ul>
+                            <li>
+                                <img src="{{ asset('asset_pdf/images/logo.png') }}" class="img-fluid" alt="logo">
+                            </li>
+                            <li>
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <h4>prikolica.shop</h4>
+                            </li>
+                            <li>
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <h4>support@multikart.com</h4>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="invoice-body">
+                        <div class="top-sec">
+                            <div class="address-detail">
+                                <h2>Porudžbina #{{ order.id }}</h2>
+                                <div class="mt-3 row">
+                                    <div class="col-lg-8 col-sm-6">
+                                        <h4 class="mb-2">{{ order.adresaPrimaoca }}</h4>
+                                        <h4 class="mb-0">{{ order.gradPrimaoca }}, {{ order.pttPrimaoca }}</h4>
+                                    </div>
+                                    <div class="col-lg-4 col-sm-6 mt-md-0 mt-2">
+                                        <ul class="date-detail">
+                                            <li><span>Datum prometa :</span>
+                                                <h4> {{ order.dateAdded | date("d.m.Y") }}</h4>
+                                            </li>
+                                            <li><span>Porudžbina :</span>
+                                                <h4> #{{ order.id }}</h4>
+                                            </li>
+                                            <li><span>Email :</span>
+                                                <h4> {{ order.emailPrimaoca }}</h4>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive-md">
+                            <table class="table table-borderless mb-0">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Proizvod</th>
+                                    <th scope="col">Cena</th>
+                                    <th scope="col">Količina</th>
+                                    <th scope="col">Ukupno</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in orderProducts %}
+                                <tr>
+                                    <th scope="row">{{ loop.index }}</th>
+                                    <td>{{ product.productName }}</td>
+                                    <td>{{ product.price | number_format(2, '.', ',') }}</td>
+                                    <td>{{ product.quantity }}</td>
+                                    <td>{{ (product.price * product.quantity)  | number_format(2, '.', ',') }}</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="2"></td>
+                                    <td class="font-bold text-dark" colspan="2">UKUPNO sa PDV</td>
+                                    <td class="font-bold text-theme">{{ (order.totalPrice*1.2) | number_format(2, '.', ',') }}</td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- invoice end -->
+
+</body>
+
+</html>

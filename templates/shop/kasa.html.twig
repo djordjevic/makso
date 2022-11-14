@@ -1,0 +1,216 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Kasa - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <!-- Shop Section start -->
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Kupovina</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Kasa</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Cart Section Start -->
+    <section class="section-b-space">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <h3 class="mb-3">Adresa za dostavu</h3>
+                    {{ form_start(form, {'attr': {'class' : 'needs-validation'}})}}
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label for="fname" class="form-label">Ime</label>
+                                {{ form_widget(form.imePrimaoca) }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lname" class="form-label">Prezime</label>
+                                {{ form_widget(form.prezimePrimaoca) }}
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lname" class="form-label">Email</label>
+                                {{ form_widget(form.emailPrimaoca) }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Mobilni telefon</label>
+                                {{ form_widget(form.telefonPrimaoca) }}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Adresa</label>
+                                {{ form_widget(form.adresaPrimaoca) }}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">Grad</label>
+                                {{ form_widget(form.gradPrimaoca) }}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">PTT broj</label>
+                                {{ form_widget(form.pttPrimaoca) }}
+                            </div>
+                            <div class="col-md-12">
+                                <label for="email" class="form-label">Napomena</label>
+                                {{ form_widget(form.napomenaAdmin) }}
+                            </div>
+                            <div class="col-md-12">
+                                <label for="placanja" class="form-label">Način plaćanja</label>
+                                {{ form_widget(form.nacinPlacanja) }}
+                            </div>
+                        </div>
+
+                        <hr class="my-lg-5 my-4">
+
+                        <button class="btn btn-solid-default mt-4" type="submit">Završite kupovinu</button>
+                    {{ form_end(form) }}
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="your-cart-box">
+                        <h3 class="mb-3 d-flex text-capitalize">Vaša korpa
+                        </h3>
+                        <ul class="list-group mb-3">
+                            {% for product in basket %}
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">{{ product.product.title }}</h6>
+                                </div>
+                                <span>
+                                    {% if app.user %}
+                                        {% if app.user.FirmaIliFizickoLice in [1, 4]  %}
+                                            {% if product.product.flDiscountVp == 1 %}
+                                                {% if product.product.discountVpPriceDin > 0 %}
+                                                    {{ ((product.ukupnaCenaDinVpP * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                                {% else %}
+                                                    {{ product.ukupnaCenaEurVpP | number_format(2, '.', ',') }}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if product.product.priceVpDin > 0 %}
+                                                    {{ ((product.ukupnaCenaDinVp * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                                {% else %}
+                                                    {{ product.ukupnaCenaEurVp | number_format(2, '.', ',') }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% else %}
+                                            {% if product.product.flDiscount == 1 %}
+                                                {% if product.product.discountPriceDin > 0 %}
+                                                    {{ ((product.ukupnaCenaDinP * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                                {% else %}
+                                                    {{ product.ukupnaCenaEurP | number_format(2, '.', ',') }}
+                                                {% endif %}
+                                            {% else %}
+                                                {% if product.product.priceDin > 0 %}
+                                                    {{ ((product.ukupnaCenaDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                                {% else %}
+                                                    {{ product.ukupnaCenaDin | number_format(2, '.', ',') }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% if product.product.flDiscount == 1 %}
+                                            {% if product.product.discountPriceDin > 0 %}
+                                                {{ ((product.ukupnaCenaDinP * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                            {% else %}
+                                                {{ product.ukupnaCenaEurP | number_format(2, '.', ',') }}
+                                            {% endif %}
+                                        {% else %}
+                                            {% if product.product.priceDin > 0 %}
+                                                {{ ((product.ukupnaCenaDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                            {% else %}
+                                                {{ product.ukupnaCenaDin | number_format(2, '.', ',') }}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                </span>
+                            </li>
+                            {% endfor %}
+
+                            <li class="list-group-item d-flex lh-condensed justify-content-between">
+                                <span class="fw-bold">Ukupno sa PDV</span>
+                                <strong>{{ (ukupnoPdv | round) | number_format(2, '.', ',') }}</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Cart Section End -->
+    <!-- Shop Section end -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

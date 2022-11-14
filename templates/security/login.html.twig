@@ -1,0 +1,102 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Prijava - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <!-- home slider -->
+    <!-- Log In Section Start -->
+    <div class="login-section">
+        <div class="materialContainer">
+            <div class="box">
+                <div class="login-title">
+                    <h3>Prijavite se</h3>
+                </div>
+                <form method="post">
+                    {% if error %}
+                        <br>
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+                    <div class="input">
+                        <input type="email" value="{{ last_username }}" name="email" required placeholder="Unesite email">
+                        <span class="spin"></span>
+                        <div class="valid-feedback">
+                            Unesite email adresu
+                        </div>
+                    </div>
+
+                    <div class="input">
+                        <input type="password" name="password" id="inputPassword" required placeholder="Unesite lozinku">
+                        <span class="spin"></span>
+                        <div class="valid-feedback">
+                            Unesite lozinku
+                        </div>
+                    </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                    <a href="{{ path('app_forgot_password_request') }}" class="pass-forgot">Zaboravili ste lozinku?</a>
+
+                    <div class="button login">
+                        <button type="submit">
+                            <span>Prijavite se</span>
+                            <i class="fa fa-check"></i>
+                        </button>
+                    </div>
+                </form>
+                <p>Niste registrovani? <a href="{{ path('izbor_registracije') }}" class="theme-color">Registrujte se</a></p>
+            </div>
+        </div>
+    </div>
+    <!-- Log In Section End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

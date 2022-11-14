@@ -1,0 +1,284 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Galerija - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Galerija</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Galerija</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section Start -->
+    <section id="portfolio" class="portfolio section-b-space">
+        <div class="container">
+
+            <div class="row g-3 filter-gallery mt-3 content grid ratio_asos">
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija1.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija1.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - SKUTER 650</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija2.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija2.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - 2D250</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija3.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija3.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - PLATFORMA 32650</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija4.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija4.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - 2S250</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija5.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija5.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - 2C300</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija6.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija6.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - 40393</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija7.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija7.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - 2C250</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 card">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija8.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija8.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>PRIKOLICA - P150</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 app">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija9.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija9.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>Plac Arilje</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 app">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija10.jpeg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija10.jpeg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>Plac Arilje</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 app">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija11.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija11.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>Plac Arilje</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid-item col-lg-3 col-md-4 col-sm-6 app">
+                    <div class="parent-container parent-container-size">
+                        <a href="{{ asset('assets/images/galerija/galerija12.jpg') }}">
+                            <img src="{{ asset('assets/images/galerija/galerija12.jpg') }}" class="img-fluid bg-img images" alt="" />
+                            <div class="overlay-color">
+                                <div class="overlay-icon">
+                                    <div>
+                                        <h4>Plac Arilje</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </section>
+    <!-- Portfolio Section End -->
+
+    <!-- Subscribe Section Start -->
+    {% include 'include/subscribe.html.twig' %}
+    <!-- Subscribe Section End -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

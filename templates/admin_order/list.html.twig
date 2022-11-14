@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Admin | Porudžbine - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header Start-->
+        {% include 'admin/admin_include/header.html.twig' %}
+        <!-- Page Header Ends-->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            {% include 'admin/admin_include/navigation.html.twig' %}
+            <!-- Page Sidebar Ends-->
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="title-header">
+                    <h5>Lista porudžbina</h5>
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <!-- Table Start -->
+                                <div class="card-body">
+                                    <table id="example" class="table table-striped" style="width:100%">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Id</th>
+                                            <th>Datum</th>
+                                            <th>Kreator</th>
+                                            <th>Lice za kontakt</th>
+                                            <th>Status</th>
+                                            <th>Vrednost sa PDV</th>
+                                            <th>Pregledajte</th>
+{#                                            <th>PDF</th>#}
+                                            <th>Obrišite</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for porudzbina in porudzbine %}
+                                            <tr>
+                                                <td>{{ loop.index }} </td>
+                                                <td>{{ porudzbina.id }}</td>
+                                                <td>{{ porudzbina.dateAdded | date("d.m.Y") }}</td>
+                                                <td>
+                                                    {% if porudzbina.member is empty %}
+                                                        Neregistrovan
+                                                    {% else %}
+                                                        {% if porudzbina.member.getFirmaIliFizickoLice == 1 %}
+                                                            {{ porudzbina.member.getNazivFirme() }}
+                                                            {% else %}
+                                                            Fizičko lice
+                                                            {% endif %}
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ porudzbina.imePrimaoca}} {{ porudzbina.prezimePrimaoca }}</td>
+                                                {% if porudzbina.orderStatus == 1 %}
+                                                    <td style="color:Orange;">
+                                                        <span>Kreirana</span>
+                                                    </td>
+                                                {% elseif  porudzbina.orderStatus == 2%}
+                                                    <td style="color:MediumSeaGreen;">
+                                                        <span>Poslata</span>
+                                                    </td>
+                                                {% else %}
+                                                    <td style="color:Tomato;">
+                                                        <span>Otkazana</span>
+                                                    </td>
+                                                {% endif %}
+                                                <td>{{ (porudzbina.totalPricePdv | round) | number_format(2, '.', ',') }}</td>
+                                                <td class="text-center"><a href="{{ path('app_admin_order_view', {id: porudzbina.id}) }}"><i data-feather="eye" style="color:MediumSeaGreen;"></i></a></td>
+{#                                                <td class="text-center"><a href="{{ path('app_admin_order_view_pdf', {id: porudzbina.id}) }}"><i data-feather="file"></i></a></td>#}
+                                                <td class="text-center"><a data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ porudzbina.id }}" href="javascript:void(0)"><i data-feather="trash-2"></i></a></td>
+                                            </tr>
+                                            <div class="modal fade" id="staticBackdrop{{ porudzbina.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog  modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-body">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Obrišite porudžbinu</h5>
+                                                            <p>Da li ste sigurni?</p>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            <div class="button-box">
+                                                                <button type="button" class="btn btn--no " data-bs-dismiss="modal">Ne</button>
+                                                                <a class="btn  btn--yes btn-primary" href="{{ path('app_admin_delete_order', {id: porudzbina.id}) }}" role="button">Da</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Table End -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Container-fluid Ends-->
+                <!-- footer start-->
+                {% include 'admin/admin_include/footer.html.twig' %}
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End-->
+
+    <!-- Modal Start -->
+    {% include 'admin/admin_include/logout.html.twig' %}
+    <!-- Modal End -->
+{% endblock content %}
+
+{% block footerjavascript %}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json',
+                },
+            });
+        });
+    </script>
+{% endblock footerjavascript %}

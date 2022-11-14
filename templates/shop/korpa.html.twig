@@ -1,0 +1,333 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    {{ 'Korpa - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- header  -->
+    {% include 'include/header.html.twig' %}
+    <!-- mobile fix menu -->
+    {% include 'include/mobile_menu.html.twig' %}
+    <!-- Shop Section start -->
+    <section class="breadcrumb-section section-b-space">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Kupovina</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="{{ path('pocetna') }}">
+                                    <i class="fas fa-home"></i>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Korpa</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    {%  if basket is defined and basket|length > 0 %}
+    <form name="formBasket" method="post" action="{{ path('korpa_preracunaj') }}">
+    <div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="count-down">
+                <br>
+                <p>Kada izmenite količinu nekog od proizvoda u korpi, pritiskom na dugme <strong>Preračunajte</strong> prikazaće se novi izgled korpe.</p>
+                {% for message in app.flashes('error') %}
+                    <div class="alert alert-warning" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% for message in app.flashes('notice') %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    <div class="col-sm-12 table-responsive mt-4">
+        <table class="table cart-table">
+            <thead>
+            <tr class="table-head">
+                <th scope="col">Slika</th>
+                <th scope="col">Proizvod</th>
+                <th scope="col">Cena</th>
+                <th scope="col">Količina</th>
+                <th scope="col">Obrišite</th>
+                <th scope="col">Ukupno</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in basket %}
+            <tr>
+                <td>
+                    <a href="{{ path('proizvod', {'id': product.product.id}) }}">
+                        <img src="{% if product.product.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(product.product.slikaMain) }}
+                                                            {% endif %}" class=" blur-up lazyload" alt="">
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('proizvod', {'id': product.product.id}) }}">{{ product.product.title }}</a>
+                </td>
+                <td>
+                    <h2>
+                        {% if app.user %}
+                            {% if app.user.FirmaIliFizickoLice in [1, 4]  %}
+                                {% if product.product.flDiscountVp == 1 %}
+                                    {% if product.product.discountVpPriceDin > 0 %}
+                                        {{ ((product.product.discountVpPriceDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.product.discountVpPriceEur | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if product.product.priceVpDin > 0 %}
+                                        {{ ((product.product.priceVpDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.product.priceVpEur | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if product.product.flDiscount == 1 %}
+                                    {% if product.product.discountPriceDin > 0 %}
+                                        {{ ((product.product.discountPriceDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.product.discountPriceEur | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if product.product.priceDin > 0 %}
+                                        {{ ((product.product.priceDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.product.priceEur | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if product.product.flDiscount == 1 %}
+                                {% if product.product.discountPriceDin > 0 %}
+                                    {{ ((product.product.discountPriceDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                {% else %}
+                                    {{ product.product.discountPriceEur | number_format(2, '.', ',') }}
+                                {% endif %}
+                            {% else %}
+                                {% if product.product.priceDin > 0 %}
+                                    {{ ((product.product.priceDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                {% else %}
+                                    {{ product.product.priceEur | number_format(2, '.', ',') }}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </h2>
+                </td>
+                <td style="width:120px">
+                        <div class="input-group ">
+                            <input type="number" name="pQty_{{ product.pid }}" class="form-control input-number" min="0"
+                                   value="{{ product.qty }}">
+                        </div>
+                </td>
+                <td>
+                    <a href="{{ path('korpa_ukloni', {'id': product.pid}) }}">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </td>
+                <td>
+                    <h2 class="td-color">
+                        {% if app.user %}
+                            {% if app.user.FirmaIliFizickoLice in [1, 4]  %}
+                                {% if product.product.flDiscountVp == 1 %}
+                                    {% if product.product.discountVpPriceDin > 0 %}
+                                        {{ ((product.ukupnaCenaDinVpP * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.ukupnaCenaEurVpP | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if product.product.priceVpDin > 0 %}
+                                        {{ ((product.ukupnaCenaDinVp * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.ukupnaCenaEurVp | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if product.product.flDiscount == 1 %}
+                                    {% if product.product.discountPriceDin > 0 %}
+                                        {{ ((product.ukupnaCenaDinP * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.ukupnaCenaEurP | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% else %}
+                                    {% if product.product.priceDin > 0 %}
+                                        {{ ((product.ukupnaCenaDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                    {% else %}
+                                        {{ product.ukupnaCenaDin | number_format(2, '.', ',') }}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if product.product.flDiscount == 1 %}
+                                {% if product.product.discountPriceDin > 0 %}
+                                    {{ ((product.ukupnaCenaDinP * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                {% else %}
+                                    {{ product.ukupnaCenaEurP | number_format(2, '.', ',') }}
+                                {% endif %}
+                            {% else %}
+                                {% if product.product.priceDin > 0 %}
+                                    {{ ((product.ukupnaCenaDin * ((product.product.taxPercentage/100) + 1)) | round)  | number_format(2, '.', ',') }}
+                                {% else %}
+                                    {{ product.ukupnaCenaDin | number_format(2, '.', ',') }}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    </h2>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    </div>
+    </div>
+    <section class="cart-section section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mt-md-5 mt-4">
+                    <div class="row">
+                        <div class="col-sm-7 col-5 order-1">
+                            <div class="left-side-button text-end d-flex d-block justify-content-end">
+                                <button type="submit" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
+                                    <i class="fas fa-calculator"></i> Preračunajte</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-5 col-7">
+                            <div class="left-side-button float-start">
+                                <a href="{{ path('prodavnica_prikolica') }}" class="btn btn-solid-default btn fw-bold mb-0 ms-0">
+                                    <i class="fas fa-arrow-left"></i>Nastavite kupovinu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+                <div class="cart-checkout-section">
+                    <div class="row g-4">
+                        <div class="col-lg-4 col-sm-6">
+                        </div>
+                        <div class="col-lg-4 col-sm-6 ">
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="cart-box">
+                                <div class="cart-box-details">
+                                    <div class="total-details">
+                                        <div class="top-details">
+                                            <h3>Ukupno</h3>
+                                            <h6>Cena
+                                                <span>
+                                                {{ (ukupno | round) | number_format(2, '.', ',') }}
+                                                </span>
+                                            </h6>
+                                            <h6>PDV <span>{{ ((ukupnoPdv - ukupno) | round)  | number_format(2, '.', ',') }}</span></h6>
+                                            <h6>Ukupno sa PDV <span>{{ (ukupnoPdv | round) | number_format(2, '.', ',') }}</span></h6>
+                                        </div>
+                                        <div class="bottom-details">
+                                            <a href="{{ path('kasa') }}">Završite kupovinu</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% else %}
+    <section class="cart-section section-b-space">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% for message in app.flashes('error') %}
+                        <div class="alert alert-warning" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <div class="count-down">
+                        <h5>Vaša korpa je prazna, nastavite ka prodavnici</h5>
+                        <a type="button" href = "{{ path('prodavnica_prikolica') }}"
+                                class="btn btn-solid-default btn-sm fw-bold">Prodavnica</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+    <!-- Shop Section end -->
+
+    <!-- footer start -->
+    {% include 'include/footer.html.twig' %}
+    <!-- footer end -->
+
+    <!-- Newsletter modal start -->
+    {#    {% include 'include/newsletter.html.twig' %}#}
+    <!-- Newsletter modal end -->
+
+    <!-- Coockie Section Start -->
+    {#    {% include 'include/cookie.html.twig' %}#}
+    <!-- Coockie Section End -->
+
+    <!-- theme Setting Start -->
+    {#    <div class="theme-setting">#}
+    {#        <ul>#}
+    {#            <li>#}
+    {#                <button id="darkButton" class="btn btn-sm dark-buttton">Dark</button>#}
+    {#            </li>#}
+    {#            <li>#}
+    {#                <button class="btn btn-sm rtl-button">RTL</button>#}
+    {#            </li>#}
+    {#            <li class="color-picker">#}
+    {#                <input type="color" class="form-control form-control-color" id="ColorPicker1" value="#0163d2"#}
+    {#                       title="Choose your color">#}
+    {#            </li>#}
+    {#        </ul>#}
+    {#    </div>#}
+    <!-- theme Setting End -->
+
+    <!-- tap to top Section Start -->
+    {% include 'include/top.html.twig' %}
+    <!-- tap to top Section End -->
+
+    <div class="bg-overlay"></div>
+{% endblock content %}
+
+{% block footerjavascript %}
+
+{% endblock footerjavascript %}

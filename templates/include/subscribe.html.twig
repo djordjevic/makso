@@ -1,0 +1,23 @@
+<section class="subscribe-section section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-6">
+                <div class="subscribe-details">
+                    <h2 class="mb-3">Budite u toku!</h2>
+                    <h6 class="font-light">Prijavite se na naš servis za obaveštenja i budite u toku sa novim informacijama.</h6>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
+                <div class="subsribe-input">
+                    <form action="{{ path('app_subscribe') }}" method="post">
+                    <div class="input-group">
+                        <input type="email" name="email" class="form-control subscribe-input" placeholder="Vaša e-mail adresa" required>
+                        <button class="btn btn-solid-default" type="submit">Prijavite se</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

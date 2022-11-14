@@ -1,0 +1,57 @@
+<div class="crvenosivastafna">
+    <div class="pagination">
+        <div class="pagination-products-count products_count">
+            <strong>[%od%]</strong> - <strong>[%do%]</strong> od <strong></strong>
+        </div>
+        <div class="pagination-middle">
+            {% if pageCount > 1 %}
+                {% if startPage > 1 %}
+                    <span class="arrows"><a href="{{ path(route, query|merge({(pageParameterName): 1})) }}" class="products_paging_links"><<</a></span>
+                {% endif %}
+
+                {% if previous is defined %}
+                    <span class="arrows arrows-img arrows-img--prev"><a href="{{ path(route, query|merge({(pageParameterName): previous})) }}" class="products_paging_links"><img src="{{ asset('assets/images/paging_left.gif') }}" alt="prethodna strana" width="5" height="8" border="0"/></a></span>
+                {% endif %}
+
+                <span class="products_paging_page">
+                {% for page in pagesInRange %}
+                    {% if page != current %}
+
+                        <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="products_paging_links">{{ page }}</a>
+
+                                                {% else %}
+
+                        <span class='pagination-disabled'>{{ page }}</span>
+
+                    {% endif %}
+                {% endfor %}
+            </span>
+
+                {% if next is defined %}
+                    <span class="arrows arrows-img arrows-img--next"><a href="{{ path(route, query|merge({(pageParameterName): next})) }}" class="products_paging_links"><img src="{{ asset('assets/images/paging_right.gif') }}" alt="naredna strana" width="5" height="8" border="0"/></a></span>
+                {% endif %}
+
+                {% if pageCount > endPage %}
+                    <span class="arrows"><a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" class="products_paging_links">>></a></span>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="pagination-sort">
+            <label>
+                <select class="sorter">
+                    <option value="" disabled selected>Sortiraj po...</option>
+                    <option value="[%sortCenaAscUrl%]">Cena rastuće</option>
+                    <option value="[%sortCenaDescUrl%]">Cena opadajuće</option>
+                    <option value="[%sortNazivAscUrl%]">Naziv proizvoda A-Z</option>
+                    <option value="[%sortNazivDescUrl%]">Naziv proizvoda Z-A</option>
+                </select>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

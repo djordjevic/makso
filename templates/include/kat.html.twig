@@ -1,0 +1,29 @@
+<div class="category-menu">
+    <button type="button" class="btn btn-solid-default toggle-category d-sm-block d-none">
+        Kategorije
+        <i class="fas fa-chevron-down d-xl-inline-block d-none"></i>
+    </button>
+    <div class="category-dropdown">
+        <div class="close-btn d-xl-none">
+            Category List
+            <span class="back-category"><i class="fa fa-angle-left"></i>
+            </span>
+        </div>
+        <ul>
+{#            {% for cat in categories %}#}
+{#                {% if cat.parentCategoryId is null %}#}
+{#                    <li>#}
+{#                        <a href="{{ path('prodavnica', {cat: cat.id}) }}">{{ cat.name }}</a>#}
+{#                    </li>#}
+{#                    {% for ca in categories %}#}
+{#                        {% if (ca.parentCategoryId is not null) and (ca.parentCategoryId.getId() == cat.id) %}#}
+{#                            <li>#}
+{#                                <a href="{{ path('prodavnica', {cat: ca.id}) }}">--{{ ca.name }}</a>#}
+{#                            </li>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                {% endif %}#}
+{#            {% endfor %}#}
+        </ul>
+    </div>
+</div>

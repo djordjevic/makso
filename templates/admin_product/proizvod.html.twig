@@ -1,0 +1,715 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    {{ 'Admin | Proizvodi - Prodaja autoprikolica, traktora.'|trans }} | prikolica.shop
+{% endblock title %}
+{% block metatags %}
+    {{ parent() }}
+    {#    <meta name="description" content="{{ metaData.pageMetaDescription }}"/>#}
+    {#    <meta name="keywords" content="{{ metaData.pageMetaKeywords }}"/>#}
+    <meta name="description" content="Distribucija i prodaja autoprikolica i traktora.">
+    <meta name="keywords" content="autoprikolice, prikolice, traktori, prodaja, cena, trigano, arilje">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ app.request.uri }}" />
+{% endblock metatags %}
+
+{% block content %}
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper dark-sidebar" id="pageWrapper">
+        <!-- Page Header Start-->
+        {% include 'admin/admin_include/header.html.twig' %}
+        <!-- Page Header Ends-->
+        <!-- Page Body Start-->
+        <div class="page-body-wrapper">
+            <!-- Page Sidebar Start-->
+            {% include 'admin/admin_include/navigation.html.twig' %}
+            <!-- Page Sidebar Ends-->
+            <!-- index body start -->
+            <div class="page-body">
+                <div class="title-header">
+                    <h5>Pregled proizvoda</h5>
+                </div>
+
+                <!-- New Product Add Start -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="pills-home-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                            type="button">Informacije</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-cene-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-cene"
+                                                            type="button">Cene</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-desc-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-desc"
+                                                            type="button">Opis</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-desc-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-atr"
+                                                            type="button">Atributi</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-slike-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-slike"
+                                                            type="button">Slike</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-meta-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-meta"
+                                                            type="button">Meta</button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="pills-meta-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-comm"
+                                                            type="button">Komentari</button>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-lg-2 col-md-3 mb-0">Naziv</label>
+                                                        <div class="col-md-9 col-lg-10">
+                                                            {{ proizvod.title }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="col-lg-2 col-md-3 col-form-label form-label-title">Šifra</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.code }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                                class="col-lg-2 col-md-3 col-form-label form-label-title">Dobavljač</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.seller.getName() }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                                class="col-lg-2 col-md-3 col-form-label form-label-title">Proizvođač</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.proizvodjac }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label
+                                                                class="col-lg-2 col-md-3 col-form-label form-label-title">Opcioni proizvodi</label>
+                                                        <div class="col-md-6">
+                                                            {% for opPro in oProizvodi %}
+                                                                {{ opPro }}{% if  not loop.last %},{% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="row align-items-center">
+                                                        <label
+                                                                class="col-lg-2 col-md-3 col-form-label form-label-title">Kategorija</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.kategorija.getName() }}
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="tab-pane fade" id="pills-cene" role="tabpanel">
+                                                    <div class="card-header-1">
+                                                        <h5>Regularna cena</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima</label>
+                                                        <div class="col-md-6">
+                                                            {{ (proizvod.priceDin | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima sa PDV-om</label>
+                                                        <div class="col-md-6">
+                                                            {{ ((proizvod.priceDin * ((proizvod.taxPercentage/100) + 1)) | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.priceEur | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Poreska stopa</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.taxPercentage }}%
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-header-1">
+                                                        <h5>Cena ka pravnim licima</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ (proizvod.priceVpDin | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima ka pravnim licima sa PDV-om</label>
+                                                        <div class="col-md-6">
+                                                            {{ ((proizvod.priceVpDin * ((proizvod.taxPercentage/100) + 1)) | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.priceVpEur | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="card-header-1">
+                                                        <h5>Cena sa popustom</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod je na popustu</label>
+                                                        <div class="col-md-6">
+                                                            {% if proizvod.flDiscount == 1 %}
+                                                                <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                            {% else %}
+                                                                <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima</label>
+                                                        <div class="col-md-6">
+                                                            {{ (proizvod.discountPriceDin | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima sa PDV-om</label>
+                                                        <div class="col-md-6">
+                                                            {{ ((proizvod.discountPriceDin * ((proizvod.taxPercentage/100) + 1)) | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.discountPriceEur | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-header-1">
+                                                        <h5>Cena sa popustom ka pravnim licima</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Proizvod je na popustu za pravna lica</label>
+                                                        <div class="col-md-6">
+                                                            {% if proizvod.flDiscount == 1 %}
+                                                                <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                            {% else %}
+                                                                <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ (proizvod.discountVpPriceDin |round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u dinarima ka pravnim licima sa PDV-om</label>
+                                                        <div class="col-md-6">
+                                                            {{ ((proizvod.discountVpPriceDin * ((proizvod.taxPercentage/100) + 1)) | round) | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena u eurima ka pravnim licima</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.discountVpPriceEur | number_format(2, '.', ',') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-desc" role="tabpanel">
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Opis</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.caracteristic | raw }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Karakteristike</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.charasteristicsDescription | raw}}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Težina u kg</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.weight | number_format(3, '.', ',') }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Info o dostavi</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.deliveryCharacteristics }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Cena dostave</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.deliveryPrice }}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Vreme dostave u danima</label>
+                                                        <div class="col-md-6">
+                                                            {{ proizvod.deliveryTime }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-atr" role="tabpanel">
+                                                    {% if proizvod.atr1 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #1</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr1.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr2 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #2</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr2.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr3 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #3</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr3.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr4 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #4</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr4.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr5 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #5</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr5.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr6 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #6</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr6.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr7 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #7</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr7.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr8 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #8</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr8.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr9 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #9</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr9.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                    {% if proizvod.atr10 is not null  %}
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Atribut #10</label>
+                                                        <div class="col-md-10">
+                                                            {{ proizvod.atr10.getName() }}
+                                                        </div>
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-slike" role="tabpanel">
+                                                    <div class="card-header-1">
+                                                        <h5>Glavna slika</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Glavna slika proizvoda</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slikaMain is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slikaMain) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slikaMain }}">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="card-header-1">
+                                                        <h5>Ostale slike</h5>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #1</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika1 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika1) }}{% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika1 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #2</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika2 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika2) }}{% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika2 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #3</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika3 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika3) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika3 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #4</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika4 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika4) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika4 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #5</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika5 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika5) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika5 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #6</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika6 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika6) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika6 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #7</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika7 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika7) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika7 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #8</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika8 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika8) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika8 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #9</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika9 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika9) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slikaMain }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #10</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika10 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika10) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika10 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #11</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika11 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika11) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika11 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #12</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika12 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika12) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika12 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #13</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika13 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika13) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika13 }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Slika #14</label>
+                                                        <div class="col-md-6">
+                                                            <img src="{% if proizvod.slika14 is null %}
+                                                                {{ asset('assets/images/products/no-image.jpg') }}
+                                                            {% else %}
+                                                                {{ asset(proizvod.slika14) }}
+                                                            {% endif %}" class="img-thumbnail" width="225" height="200"
+                                                                 alt="{{ proizvod.slika14 }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-meta" role="tabpanel">
+
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Naziv proizvoda</label>
+                                                        <div class="col-sm-10">
+                                                            {{ proizvod.metaTitle }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Opis proizvoda</label>
+                                                        <div class="col-sm-10">
+                                                            {{ proizvod.metaDescription | raw }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-4 row align-items-center">
+                                                        <label class="form-label-title col-sm-2 mb-0">Ključne reči</label>
+                                                        <div class="col-sm-10">
+                                                            {{ proizvod.metaKeywords }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="pills-comm" role="tabpanel">
+
+                                                    <table id="example" class="table table-striped" style="width:100%">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Ime</th>
+                                                            <th>Email</th>
+                                                            <th>Komentar</th>
+                                                            <th>Datum</th>
+                                                            <th>Status</th>
+                                                            <th>Pregledajte</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for comment in comments %}
+                                                            <tr>
+                                                                <td>{{ loop.index }} </td>
+                                                                <td>{{ comment.name }}</td>
+                                                                <td>{{ comment.email }}</td>
+                                                                <td>{{ comment.comment |length > 50 ? comment.comment|slice(0, 50) ~ '...' : comment.comment }}</td>
+                                                                <td>{{ comment.created | date("d.m.Y") }}</td>
+                                                                <td class="text-center">
+                                                                    {% if comment.active == 1 %}
+                                                                        <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                                    {% else %}
+                                                                        <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td class="text-center"><a href="{{ path('app_admin_view_review', {id: comment.id}) }}"><i data-feather="eye" style="color:MediumSeaGreen;"></i></a></td>
+{#                                                                <td class="text-center"><a data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ comment.id }}" href="javascript:void(0)">#}
+{#                                                                        {% if comment.active == 1 %}#}
+{#                                                                            Zabranite#}
+{#                                                                        {% else %}#}
+{#                                                                            Dozvolite#}
+{#                                                                        {% endif %}#}
+{#                                                                    </a></td>#}
+                                                            </tr>
+{#                                                            <div class="modal fade" id="staticBackdrop{{ comment.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"#}
+{#                                                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">#}
+{#                                                                <div class="modal-dialog  modal-dialog-centered">#}
+{#                                                                    <div class="modal-content">#}
+{#                                                                        <div class="modal-body">#}
+{#                                                                            <h5 class="modal-title" id="staticBackdropLabel">#}
+{#                                                                                {% if comment.active == 1 %}#}
+{#                                                                                    Zabranite komentar#}
+{#                                                                                {% else %}#}
+{#                                                                                    Dozvolite komentar#}
+{#                                                                                {% endif %}#}
+{#                                                                            </h5>#}
+{#                                                                            <p>Da li ste sigurni?</p>#}
+{#                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#                                                                            <div class="button-box">#}
+{#                                                                                <button type="button" class="btn btn--no " data-bs-dismiss="modal">Ne</button>#}
+{#                                                                                <a class="btn  btn--yes btn-primary" href="{{ path('app_admin_status_review', {id: comment.id}) }}" role="button">Da</a>#}
+{#                                                                            </div>#}
+{#                                                                        </div>#}
+{#                                                                    </div>#}
+{#                                                                </div>#}
+{#                                                            </div>#}
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="pills-home-tab"
+                                                            data-bs-toggle="pill" data-bs-target="#pills-home"
+                                                            type="button">Podešavanja</button>
+                                                </li>
+                                            </ul>
+
+                                            <div class="tab-content" id="pills-tabContent">
+                                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+                                                    <div class="row">
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-2 mb-0">Proizvod nema na stanju</label>
+                                                            <div class="col-md-6">
+                                                                {% if proizvod.flOutOfStock == 1 %}
+                                                                    <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                                {% else %}
+                                                                    <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-4 row align-items-center">
+                                                            <label class="form-label-title col-sm-2 mb-0">Proizvod je nov</label>
+                                                            <div class="col-md-6">
+                                                                {% if proizvod.flNewProduct == 1 %}
+                                                                    <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                                {% else %}
+                                                                    <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row align-items-center">
+                                                            <label class="form-label-title col-sm-2 mb-0">Proizvod je aktivan</label>
+                                                            <div class="col-md-6">
+                                                                {% if proizvod.active == 1 %}
+                                                                    <i data-feather="check-circle" style="color:MediumSeaGreen;"></i>
+                                                                {% else %}
+                                                                    <i data-feather="minus-circle" style="color:Tomato;"></i>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- New Product Add End -->
+                <!-- footer start-->
+                {% include 'admin/admin_include/footer.html.twig' %}
+                <!-- footer End-->
+            </div>
+            <!-- index body end -->
+        </div>
+        <!-- Page Body End -->
+    </div>
+    <!-- page-wrapper End-->
+
+    <!-- Modal Start -->
+    {% include 'admin/admin_include/logout.html.twig' %}
+    <!-- Modal End -->
+{% endblock content %}
+
+{% block footerjavascript %}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json',
+                },
+            });
+        });
+    </script>
+{% endblock footerjavascript %}
